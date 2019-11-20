@@ -1,0 +1,42 @@
+name,questtype,cc,cr,wc,wr,bc,br,onc,onr,pc,pr,vp,plot,intrigue
+Expose Red Wizards' Spies,Arcana,2,0,1,0,2,0,1,0,2,0,20,0,1
+Host Festival for Sune,Arcana,4,0,0,2,0,0,2,0,2,0,9,0,0
+Infiltrate Halaster's Circle,Arcana,2,0,0,0,0,0,0,0,5,0,25,0,0
+Investigate Aberant Infestation,Arcana,0,0,1,0,0,0,1,0,2,0,13,0,1
+Recruit for Blackstaff Academy,Arcana,4,0,0,0,1,0,1,0,2,3,6,0,0
+Retrieve Ancient Artifacts,Arcana,0,4,0,0,1,0,2,0,2,0,11,0,0
+Steal Spellbook from Silverhand,Arcana,0,4,0,0,2,0,1,0,2,0,7,0,2
+Domesticate Owlbears,Arcana,0,2,1,0,0,0,0,1,2,0,8,0,0
+Ally with House Thann,Commerse,8,0,1,0,3,0,0,0,1,0,25,0,0
+Impersonate Adarbrent Noble,Commerse,4,0,1,0,2,0,2,0,1,0,18,0,2
+Safequard Eltorchul Mage,Commerse,4,0,0,0,1,0,1,0,1,2,4,0,0
+Spy on the House of Light,Commerse,2,6,0,0,2,0,3,0,0,0,6,0,0
+Thin the City Watch,Commerse,4,0,1,0,1,4,1,0,0,0,9,0,0
+Create a Shrine to Oghma,Piety,2,0,5,0,0,0,0,0,0,0,25,0,0
+Eliminate Vampire Coven,Piety,0,4,2,0,1,0,2,0,0,0,11,0,0
+Heal Fallen Gray Hand Soldiers,Piety,4,0,2,0,0,0,0,6,1,0,6,0,0
+Perform the Penance of Duty,Piety,4,0,2,1,0,0,2,1,0,0,12,0,0
+Recruit Paladins for Tyr,Piety,4,0,2,3,0,0,4,0,0,0,10,0,0
+Seal Gate to Cyric's Realm,Piety,4,0,2,0,3,0,0,0,0,0,20,0,0
+Build a Reputaton in Skullport,Skullduggery,4,0,0,0,3,0,1,0,0,0,10,0,1
+Establish Shadow Thieve's Guild,Skullduggery,0,0,0,0,8,0,1,0,1,0,25,0,0
+Expose Cult Corruption,Skullduggery,0,0,1,2,4,0,0,0,0,0,4,0,0
+Procure Stolen Goods,Skullduggery,6,0,0,0,3,0,0,0,0,0,8,0,2
+Raid on Undermountain,Skullduggery,0,2,1,0,4,0,2,0,1,0,20,0,0
+Steal From House Adarbrent,Skullduggery,0,6,0,0,4,0,1,0,1,0,10,0,0
+Take Over Rival Organization,Skullduggery,6,0,0,0,2,4,1,0,1,0,10,0,0
+Ambush Artor Morlin,Warfare,0,4,1,0,1,0,3,0,0,0,8,0,0
+Bolster City Guard,Warfare,0,0,0,0,2,0,9,0,0,0,25,0,0
+Confront the Xanathar,Warfare,0,2,1,0,2,0,4,0,1,0,20,0,0
+Defeat Uprising From Undermountain,Warfare,2,0,1,0,1,0,3,2,0,0,11,0,0
+Deliver an Ultimatum,Warfare,0,4,0,0,1,0,4,0,1,0,11,0,0
+Deliver Weapons to Selune's Temple,Warfare,2,0,0,2,1,0,4,0,1,0,9,0,0
+Raid Orc Stronghold,Warfare,0,4,0,0,2,0,4,0,0,0,8,0,0
+Repel Seawraiths,Warfare,0,2,1,0,0,0,4,0,1,0,15,0,0
+Train Bladesingers,Warfare,0,0,0,0,0,0,3,1,1,1,4,0,0
+Foil the Zhentarim,Mandatory,0,0,0,0,1,0,1,0,1,0,0,2,0
+Repel Drow Invaders,Mandatory,0,0,1,0,2,0,0,0,0,0,0,2,0
+Quell Riots,Mandatory,0,0,2,0,0,0,1,0,0,0,0,4,0
+Placate Angry Merchants,Mandatory,0,0,1,0,0,0,1,0,1,0,0,4,0
+Stamp Out Cultists,Mandatory,0,0,1,0,1,0,1,0,0,0,0,2,0
+Fend Off Bandits,Mandatory,0,0,0,0,0,0,2,0,1,0,0,2,0

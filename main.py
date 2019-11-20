@@ -1,12 +1,15 @@
-import player
-import building
-import sys
 import random
+import sys
+
+import building
+import pandas as pd
+import player
 from lord import Lord
 from quest import Quest
+from quest import Deck
 
-typeslist = ['building', 'commerce',
-             'skullduggery', 'warfare', 'piety', 'arcana']
+typeslist = ['Building', 'Commerce',
+             'Skullduggery', 'Warfare', 'Piety', 'Arcana', 'Mandatory']
 #create deck of leaders
 lords = [Lord([typeslist[1], typeslist[2]]),
             Lord([typeslist[1], typeslist[3]]), 
@@ -23,10 +26,6 @@ lords = [Lord([typeslist[1], typeslist[2]]),
 def roll():
     return random.randint(0,5)
 
-quests = [Quest(str(i), typeslist[random.randint(1, 5)], roll(), roll(), roll(), 
-                                    roll(), roll(), roll(), roll(), roll(), roll(), 
-                                    roll(), random.randint(0, 25)) for i in range(60)]
-
 def checkArgs():
     return
 
@@ -39,14 +38,15 @@ def initializeGame():
     #shuffle leader deck
     random.shuffle(lords)
     print(*lords)
-    random.shuffle(quests)
-    print(*quests)
+
+    questdeck = Deck()
+    print(*questdeck)
+    for t in typeslist:
+        print(t + ':' + str(sum(q.questtype == t for q in questdeck)))
+    print(*list(str(l) + ' awards ' + str(l.award(questdeck))+' points for all quests in deck\n' for l in lords))
     return
 
 initializeGame()
-for t in typeslist:
-    print(t + ':' + str(sum(q.questtype == t for q in quests)))
-print(*list(str(l) + ' awards ' + str(l.award(quests))+' points for all quests in deck\n' for l in lords))
 
 if '__name__' == '__main__':
     checkArgs()
