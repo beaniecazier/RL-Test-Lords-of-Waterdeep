@@ -28,35 +28,102 @@
 # victory points
 # intrigue cards
 
+#TODO
+# buildings on the board
+# list of buildings that can be used
+# builder's hall buildings
+# player.receiveresources()
+# building init
+# building basic functions
+
+# MISSING BUILDINGS
+# Zoarstar
+# Palace of Waterdeep
+# The Stone House
+
+import pandas as pd
+from resourcevector import RVector
+
 class Building:
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.owner = None
-        self.cost = 0
-        self.white = 0
-        self.ownerwhit = 0
-        self.black = 0
-        self.ownerblack = 0
-        self.purple = 0
-        self.ownerpurple = 0
-        self.orange = 0 
-        self.ownerorange = 0
-        self.coin = 0
-        self.ownercoin = 0
-        self.cumualtivecoin = False
-        self.victorypoints = 0
-        self.cumulativepoints = False
-        self.zoarstar = False
-        return
-
-    def ownerEffect(self):
-        return
-
-    def effect(self):
-        return
-
-    def drawIntrigue(self):
-        return
+    effectvector = [RVector(0, 0, 0, 0, 0, 0, 0, 0, 0)]
+    resourcepool = RVector(0, 0, 0, 0, 0, 0, 0, 0, 0)
+    ownervector = RVector(0, 0, 0, 0, 0, 0, 0, 0, 0)
+    owner = None
+    cumulative = False
     
-    def chooseQuest(self):
+    def __init__(self, name, cost, effect, owner, coinpayment, tokenpayment):
+        self.cost = cost
+        self.name = name
+        
+        if name in ['The Golden Horn', 'Spires of the Morning', 'Jester\'s Court', 'Caravan Court', 'Tower of the Order', 'The Waymoot']:
+            self.cumulative = True
+
+        if name == 'House of Good Spirits':
+            self.effectvector.append(RVector(0,0,0,1,0,0,0,0,0))
+
+        self.effectvector[0].coin -= coinpayment
         return
+
+    def __repr__(self):
+        return self.name
+
+    def use(self, player): 
+        # player effect
+        player.receiveresources(self.effectvector[0] if not self.cumulative else self.resourcepool)
+        
+        #special cases
+        if self.name == 'House of Good Spirits':
+            player.receiveresources(self.effectvector[1])
+
+        # reset cumulative to show player has taken all resources from pile
+        if self.cumulative:
+            self.resourcepool = RVector(0, 0, 0, 0, 0, 0, 0, 0, 0)
+
+        # do owner effect
+        if self.owner != player:
+            owner.receiveresources(self.ownervector)
+        return
+
+    def updatePile(self):
+        if self.cumulative:
+            for ev in self.effectvector:
+                self.resourcepool += ev
+        return
+
+class Deck(list):
+    def __init__(self):
+        effect_df = pd.read_csv('buildingeffect.csv')
+        cost_df = pd.read_csv('buildingcost.csv')
+        owner_df = pd.read_csv('buildingowner.csv')
+
+        # set index for each
+        effect_df.set_index('name', inplace=True)
+        cost_df.set_index('name', inplace=True)
+        owner_df.set_index('name', inplace=True)
+        # check to make sure indexes are same
+        # mesh together
+        # make list of indexes
+        for name in cost_df.index:
+            effect = RVector(effect_df.loc[name, 'coin'],
+                             effect_df.loc[name, 'white'],
+                             effect_df.loc[name, 'black'],
+                             effect_df.loc[name, 'orange'],
+                             effect_df.loc[name, 'purple'],
+                             effect_df.loc[name, 'vp'],
+                             effect_df.loc[name, 'intrigue'],
+                             effect_df.loc[name, 'quest'],
+                             effect_df.loc[name, 'choice'])
+            owner = RVector(owner_df.loc[name, 'coin'],
+                             owner_df.loc[name, 'white'],
+                             owner_df.loc[name, 'black'],
+                             owner_df.loc[name, 'orange'],
+                             owner_df.loc[name, 'purple'],
+                             owner_df.loc[name, 'vp'],
+                             owner_df.loc[name, 'intrigue'],
+                             owner_df.loc[name, 'quest'],
+                             owner_df.loc[name, 'choice'])
+            self.append(Building(name, cost_df.loc[name,'cost'], effect, owner, effect_df.loc[name,'paycoin'],effect_df.loc[name,'payany']))
+
+            def draw(self):
+                return self.pop()
+
