@@ -35,18 +35,31 @@ def main():
     initializeGame()
     return
 
+def palaceOfWaterDeep(self, players, player):
+    for p in players:
+        p.setAmbassador(p == player)
+            
 def initializeGame():
-    #shuffle leader deck
-    random.shuffle(lords)
-    print(*lords)
-    random.shuffle(quests)
-    print(*quests)
+    players = [player.Player() for i in range(4)]
+    deck = building.Deck()
+    startingbuildings = ['Cliffwatch Inn1', 'Cliffwatch Inn2', 'Cliffwatch Inn3', 'Waterdeep Harber1',
+                        'Waterdeep Harber2', 'Waterdeep Harber3', 'Field of Triumph', 'Blackstaff Tower',
+                        'Castle Waterdeep', 'Builder\'s Hall', 'Aurora\'s Realms Shop',
+                        'The Plinth', 'The Grinning Lion Tavern']
+    board = deck.grabInitialBuildings(startingbuildings)
+    deck.shuffle()
+    buildhall = [deck.draw() for i in range(4)]
+    deck.buildings['The Stone House'].extraeffects[lambda board, player: len(board) - 13] = [board]
+    deck.buildings['Zoarstar'].extraeffects[lambda board, player:player.chooseBuilding(
+        [b for b in board if b.occupant != player])] = [board]
+    deck.buildings[''].extraeffects[palaceOfWaterDeep] = [players, player]
+    print(*board)
+    print(*buildhall)
+    print(deck)
+    deck.buildings['The Stone House'].use(True)
     return
 
 initializeGame()
-for t in typeslist:
-    print(t + ':' + str(sum(q.questtype == t for q in quests)))
-print(*list(str(l) + ' awards ' + str(l.award(quests))+' points for all quests in deck\n' for l in lords))
 
 if '__name__' == '__main__':
     checkArgs()

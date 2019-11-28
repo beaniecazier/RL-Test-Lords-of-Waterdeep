@@ -43,6 +43,7 @@
 
 import pandas as pd
 from resourcevector import RVector
+import random
 
 class Building:
     effectvector = [RVector(0, 0, 0, 0, 0, 0, 0, 0, 0)]
@@ -50,6 +51,10 @@ class Building:
     ownervector = RVector(0, 0, 0, 0, 0, 0, 0, 0, 0)
     owner = None
     cumulative = False
+    occupant = None
+    showing = False
+    # this is a dictionary whose key is a lambda and value is a list of parameters needed
+    extraeffects = {}
     
     def __init__(self, name, cost, effect, owner, coinpayment, tokenpayment):
         self.cost = cost
@@ -65,9 +70,15 @@ class Building:
         return
 
     def __repr__(self):
-        return self.name
+        effect = str(self.effectvector[0]) + (' and ' + str(self.effectvector[1])) if len(self.effectvector) > 1 else ""
+        return self.name + ': has the use effect of ' + effect + ' and for the owner ' + str(self.ownervector) + '\n'
 
     def use(self, player): 
+        self.occupant = player
+        if len(self.extraeffects) > 0:
+            for effect in self.extraeffects.items():
+                print(effect[0](effect[1]))
+                
         # player effect
         player.receiveresources(self.effectvector[0] if not self.cumulative else self.resourcepool)
         
@@ -89,8 +100,15 @@ class Building:
             for ev in self.effectvector:
                 self.resourcepool += ev
         return
+    
+    def reveal(self):
+        self.showing = True
+        return self
 
-class Deck(list):
+    def clear(self):
+        self.occupant = None
+
+class Deck():
     def __init__(self):
         effect_df = pd.read_csv('buildingeffect.csv')
         cost_df = pd.read_csv('buildingcost.csv')
@@ -103,6 +121,8 @@ class Deck(list):
         # check to make sure indexes are same
         # mesh together
         # make list of indexes
+        self.cards = []
+        self.buildings = {}
         for name in cost_df.index:
             effect = RVector(effect_df.loc[name, 'coin'],
                              effect_df.loc[name, 'white'],
@@ -122,8 +142,28 @@ class Deck(list):
                              owner_df.loc[name, 'intrigue'],
                              owner_df.loc[name, 'quest'],
                              owner_df.loc[name, 'choice'])
-            self.append(Building(name, cost_df.loc[name,'cost'], effect, owner, effect_df.loc[name,'paycoin'],effect_df.loc[name,'payany']))
+            self.cards.append(name)
+            self.buildings[name] = Building(name, 
+                                        cost_df.loc[name,'cost'], 
+                                        effect, 
+                                        owner, 
+                                        effect_df.loc[name,'paycoin'],
+                                        effect_df.loc[name,'payany'])
+        return
 
-            def draw(self):
-                return self.pop()
+    def draw(self):
+        return self.buildings[self.cards.pop()].reveal()
 
+    def shuffle(self):
+        random.shuffle(self.cards)
+        return
+    
+    def remove(self, name):
+        if name in self.cards:
+                # this throws value error if could not remove or not found
+            self.cards.remove(name)
+            return self.buildings[name].reveal().name
+        return 'ERROR: Building not found in deck'
+
+    def grabInitialBuildings(self, names):
+        return [self.buildings[self.remove(name)] for name in names]
