@@ -27,6 +27,8 @@ quests = [Quest(str(i), typeslist[random.randint(1, 5)], roll(), roll(), roll(),
                                     roll(), roll(), roll(), roll(), roll(), roll(), 
                                     roll(), random.randint(0, 25)) for i in range(60)]
 
+#players = []
+
 def checkArgs():
     return
 
@@ -35,12 +37,16 @@ def main():
     initializeGame()
     return
 
-def palaceOfWaterDeep(self, players, player):
+def palaceOfWaterDeep(players, player):
     for p in players:
         p.setAmbassador(p == player)
+
+def buildersHall():
+    
+    return
             
 def initializeGame():
-    players = [player.Player() for i in range(4)]
+    players = [player.Player(None, 5, None, None) for i in range(4)]
     deck = building.Deck()
     startingbuildings = ['Cliffwatch Inn1', 'Cliffwatch Inn2', 'Cliffwatch Inn3', 'Waterdeep Harber1',
                         'Waterdeep Harber2', 'Waterdeep Harber3', 'Field of Triumph', 'Blackstaff Tower',
@@ -48,15 +54,16 @@ def initializeGame():
                         'The Plinth', 'The Grinning Lion Tavern']
     board = deck.grabInitialBuildings(startingbuildings)
     deck.shuffle()
-    buildhall = [deck.draw() for i in range(4)]
+    buildhall = {deck.draw():3 for i in range(4)}
     deck.buildings['The Stone House'].extraeffects[lambda board, player: len(board) - 13] = [board]
-    deck.buildings['Zoarstar'].extraeffects[lambda board, player:player.chooseBuilding(
+    deck.buildings['The Zoarstar'].extraeffects[lambda board, player:player.chooseBuilding(
         [b for b in board if b.occupant != player])] = [board]
-    deck.buildings[''].extraeffects[palaceOfWaterDeep] = [players, player]
+    deck.buildings['The Palace of Waterdeep'].extraeffects[palaceOfWaterDeep] = [
+        players]
     print(*board)
     print(*buildhall)
     print(deck)
-    deck.buildings['The Stone House'].use(True)
+    deck.buildings['The Stone House'].use(players[0])
     return
 
 initializeGame()

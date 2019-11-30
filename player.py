@@ -1,21 +1,18 @@
+from resourcevector import RVector
+import sys
+
 class Player:
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.white = 0
-        self.black = 0
-        self.purple = 0
-        self.orange = 0
-        self.coin = 0
-        self.score = 0
+    def __init__(self, lord, totalagents, hand, quests):
+        self.resources = RVector(0,0,0,0,0,0,0,0,0)
         self.fp = False
         self.haslieutenant = False
         self.hasambassador = False
-        self.lord = None
-        self.numagents = 0
-        self.buildings = None
-        self.quests = None
-        self.intriguecards = None
-        self.totalagents = 0
+        self.lord = lord
+        self.numagents = totalagents
+        self.buildings = []
+        self.quests = quests
+        self.intriguecards = hand
+        self.totalagents = totalagents
         return
 
     def incrementWhite(self, amount):
@@ -38,19 +35,43 @@ class Player:
         self.coin += amount
         return
 
+    def incrementVP(self, amount):
+        self.score += amount
+        return
+
     def gainLieutenant(self):
         self.haslieutenant = True
         return
 
-    def gainAmbassador(self):
-        self.hasambassador = True
+    def setAmbassador(self, value):
+        self.hasambassador = value
         return
 
-    def drawIntrigue(self):
+    def drawIntrigue(self, num):
         return
 
-    def drawQuest(self):
+    def drawQuest(self, num):
         return
 
-    def drawQuest(self, quest):
+    def buyBuilding(self, building):
+        building.buy(self)
+        self.buildings.append(building)
+    
+    def receiveResources(self, effects):
+        increment = RVector(0,0,0,0,0,0,0,0,0)
+        for e in effects:
+            for i in range(e.choice):
+                increment = self.chooseToken(increment, e.white, e.black, e.orange, e.purple)
+            self.drawQuest(e.quest)
+            self.drawIntrigue(e.intrigue)
+            if e.choice == 0:
+                increment.white += e.white
+                increment.black += e.black
+                increment.orange += e.orange
+                increment.purple += e.purple
+            increment.coin += e.coin
+            increment.vp += e.vp
+        self.resources += increment
+
+    def chooseToken(self, w, b, o, p):
         return

@@ -46,7 +46,7 @@ from resourcevector import RVector
 import random
 
 class Building:
-    effectvector = [RVector(0, 0, 0, 0, 0, 0, 0, 0, 0)]
+    effectvector = []
     resourcepool = RVector(0, 0, 0, 0, 0, 0, 0, 0, 0)
     ownervector = RVector(0, 0, 0, 0, 0, 0, 0, 0, 0)
     owner = None
@@ -55,36 +55,49 @@ class Building:
     showing = False
     # this is a dictionary whose key is a lambda and value is a list of parameters needed
     extraeffects = {}
+    coincost = False
+    tokencost = False
     
     def __init__(self, name, cost, effect, owner, coinpayment, tokenpayment):
         self.cost = cost
         self.name = name
-        
-        if name in ['The Golden Horn', 'Spires of the Morning', 'Jester\'s Court', 'Caravan Court', 'Tower of the Order', 'The Waymoot']:
-            self.cumulative = True
+
+        if tokenpayment > 0:
+            self.effectvector.append(RVector(0,-1,-1,-1,-1,0,0,0,tokenpayment))
+            self.tokencost = True
+
+        if coinpayment > 0:
+            self.effectvector.append(RVector(-coinpayment,0,0,0,0,0,0,0,0))
+            self.coincost = True
+
+        self.effectvector.append(effect)
 
         if name == 'House of Good Spirits':
-            self.effectvector.append(RVector(0,0,0,1,0,0,0,0,0))
+            self.effectvector.append(RVector(0, 0, 0, 1, 0, 0, 0, 0, 0))
 
-        self.effectvector[0].coin -= coinpayment
+        if name in ['The Golden Horn', 'Spires of the Morning', 'Jester\'s Court', 'Caravan Court', 'Tower of the Order', 'The Waymoot']:
+            self.cumulative = True
+            self.resourcepool = effect
         return
 
     def __repr__(self):
         effect = str(self.effectvector[0]) + (' and ' + str(self.effectvector[1])) if len(self.effectvector) > 1 else ""
         return self.name + ': has the use effect of ' + effect + ' and for the owner ' + str(self.ownervector) + '\n'
 
+    def buy(self, player):
+        self.owner = player
+        if  self.cumulative:
+            player.receiveresources([self.resourcepool])
+            self.resourcepool = RVector(0,0,0,0,0,0,0,0,0)
+
     def use(self, player): 
         self.occupant = player
+
         if len(self.extraeffects) > 0:
             for effect in self.extraeffects.items():
-                print(effect[0](effect[1]))
+                print(effect[0](effect[1], player))
                 
-        # player effect
-        player.receiveresources(self.effectvector[0] if not self.cumulative else self.resourcepool)
-        
-        #special cases
-        if self.name == 'House of Good Spirits':
-            player.receiveresources(self.effectvector[1])
+        player.receiveresources([self.resourcepool] if self.cumulative else self.effectvector)
 
         # reset cumulative to show player has taken all resources from pile
         if self.cumulative:
@@ -92,7 +105,7 @@ class Building:
 
         # do owner effect
         if self.owner != player:
-            owner.receiveresources(self.ownervector)
+            owner.receiveresources([self.ownervector])
         return
 
     def updatePile(self):
