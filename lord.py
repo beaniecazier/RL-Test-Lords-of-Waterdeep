@@ -4,7 +4,7 @@
 
 from quest import Quest
 
-typeslist = ['building', 'commerce', 'skullduggery', 'warfare', 'piety', 'arcana']
+typeslist = ['Building', 'Commerce', 'Skullduggery', 'Warfare', 'Piety', 'Arcana']
 
 class Lord:
     def __init__(self, types):
@@ -16,10 +16,10 @@ class Lord:
 
     def __repr__(self):
         questtypes = ''
-        if self.types == ['building']:
-            questtypes = 'buildings'
+        if self.types == ['Building']:
+            questtypes = 'Buildings'
         else:
-            questtypes = self.types[0] + ' and ' + self.types[1]
+            questtypes = str(self.types[0]) + ' and ' + str(self.types[1])
         return 'this lord has: ' + questtypes + ' for ' + str(self.points) + ' points each\n'
     
     def award(self, quests):        

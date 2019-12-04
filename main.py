@@ -1,12 +1,15 @@
-import player
-import building
-import sys
 import random
+import sys
+
+import building
+import pandas as pd
+import player
 from lord import Lord
 from quest import Quest
+from quest import Deck
 
-typeslist = ['building', 'commerce',
-             'skullduggery', 'warfare', 'piety', 'arcana']
+typeslist = ['Building', 'Commerce',
+             'Skullduggery', 'Warfare', 'Piety', 'Arcana', 'Mandatory']
 #create deck of leaders
 lords = [Lord([typeslist[1], typeslist[2]]),
             Lord([typeslist[1], typeslist[3]]), 
@@ -46,6 +49,16 @@ def buildersHall():
     return
             
 def initializeGame():
+    ##shuffle leader deck
+    #random.shuffle(lords)
+    #print(*lords)
+
+    #questdeck = Deck()
+    #print(*questdeck)
+    #for t in typeslist:
+    #    print(t + ':' + str(sum(q.questtype == t for q in questdeck)))
+    #print(*list(str(l) + ' awards ' + str(l.award(questdeck))+' points for all quests in deck\n' for l in lords))
+
     players = [player.Player(None, 5, None, None) for i in range(4)]
     deck = building.Deck()
     startingbuildings = ['Cliffwatch Inn1', 'Cliffwatch Inn2', 'Cliffwatch Inn3', 'Waterdeep Harber1',
