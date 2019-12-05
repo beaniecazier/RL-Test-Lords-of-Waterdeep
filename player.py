@@ -1,43 +1,27 @@
 from resourcevector import RVector
 import sys
 
+numagents = [None,4,3,2,2]
+names = {'yellow':'Knights of the Shield', 'grey':'City Guard', 'blue':'Silverstars', 'green':'Harpers', 'red':'Red Sashes'}
 class Player:
-    def __init__(self, lord, totalagents, hand, quests):
+    lord = None
+    quests = []
+    intriguecards = []
+    buildings = []
+
+    def __init__(self, color, totalagents):
+        self.name = names[color]
+        self.color = color
         self.resources = RVector(0,0,0,0,0,0,0,0,0)
         self.fp = False
         self.haslieutenant = False
         self.hasambassador = False
-        self.lord = lord
         self.numagents = totalagents
-        self.buildings = []
-        self.quests = quests
-        self.intriguecards = hand
         self.totalagents = totalagents
         return
 
-    def incrementWhite(self, amount):
-        self.white += amount
-        return
-
-    def incrementBlack(self, amount):
-        self.black += amount
-        return
-
-    def incrementOrange(self, amount):
-        self.coin += amount
-        return
-
-    def incrementPurple(self, amount):
-        self.coin += amount
-        return
-
-    def incrementCoin(self, amount):
-        self.coin += amount
-        return
-
-    def incrementVP(self, amount):
-        self.score += amount
-        return
+    def assignLord(self, lord):
+        self.lord = lord
 
     def gainLieutenant(self):
         self.haslieutenant = True
@@ -75,3 +59,11 @@ class Player:
 
     def chooseToken(self, w, b, o, p):
         return
+
+class Group():
+    def __init__(self, numplayers, numai, colors = ['yellow','grey','blue','green','red']):
+        self.names = colors
+        self.players = {}
+        for i in numplayers:
+            self.players[colors[i]] = Player(None, numagents[numplayers], None, None)
+        self.first = colors[0]
