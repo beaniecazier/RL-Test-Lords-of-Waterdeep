@@ -65,3 +65,10 @@ class RVector():
         self.intrigue += other.intrigue
         self.quest += other.quest
         self.choice += other.choice
+
+    def __lt__(self, other):
+        if self.coin < other.coin: return True
+        if self.white < other.white: return True
+        if self.black < other.black: return True
+        if self.orange < other.orange: return True
+        if self.purple < other.purplw: return True
