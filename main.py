@@ -1,43 +1,37 @@
 import random
 import sys
 
-import building
 import pandas as pd
+from itertools import cycle
+
+import building
 import player
-from lord import Lord
-from quest import Quest
-from quest import Deck
+import quest
+import lord
+from resourcevector import RVector
+
+#Builder's hall is a list of length 4 containing tuples
+#ele0: building; ele1: cost; ele2:vp; ele3; buy effects
 
 typeslist = ['Building', 'Commerce',
              'Skullduggery', 'Warfare', 'Piety', 'Arcana', 'Mandatory']
-#create deck of leaders
-lords = [Lord([typeslist[1], typeslist[2]]),
-            Lord([typeslist[1], typeslist[3]]), 
-            Lord([typeslist[1], typeslist[4]]), 
-            Lord([typeslist[1], typeslist[5]]), 
-            Lord([typeslist[2], typeslist[3]]),
-            Lord([typeslist[2], typeslist[4]]), 
-            Lord([typeslist[2], typeslist[5]]), 
-            Lord([typeslist[3], typeslist[4]]), 
-            Lord([typeslist[3], typeslist[5]]), 
-            Lord([typeslist[4], typeslist[5]]),
-            Lord([typeslist[0]])]
+startingbuildings = ['Cliffwatch Inn1', 'Cliffwatch Inn2', 'Cliffwatch Inn3', 'Waterdeep Harber1',
+                    'Waterdeep Harber2', 'Waterdeep Harber3', 'Field of Triumph', 'Blackstaff Tower',
+                    'Castle Waterdeep', 'Builder\'s Hall', 'Aurora\'s Realms Shop',
+                    'The Plinth', 'The Grinning Lion Tavern']
+
+lords = lord.Deck()
+quests = quest.Deck()
+deck = building.Deck()
+player = []
 
 def roll():
     return random.randint(0,5)
 
-quests = [Quest(str(i), typeslist[random.randint(1, 5)], roll(), roll(), roll(), 
-                                    roll(), roll(), roll(), roll(), roll(), roll(), 
-                                    roll(), random.randint(0, 25)) for i in range(60)]
-
 #players = []
 
 def checkArgs():
-    return
-
-def main():
-    #shuffle decks using shuffle(deckobj, times) {for times random.shuffle(deck)}
-    initializeGame()
+    #whether tokens and resources should be limited or unlimited
     return
 
 def palaceOfWaterDeep(players, player):
@@ -48,39 +42,68 @@ def buildersHall():
     
     return
             
-def initializeGame():
-    ##shuffle leader deck
-    #random.shuffle(lords)
-    #print(*lords)
-
-    #questdeck = Deck()
-    #print(*questdeck)
-    #for t in typeslist:
-    #    print(t + ':' + str(sum(q.questtype == t for q in questdeck)))
-    #print(*list(str(l) + ' awards ' + str(l.award(questdeck))+' points for all quests in deck\n' for l in lords))
-
-    players = [player.Player(None, 5, None, None) for i in range(4)]
-    deck = building.Deck()
-    startingbuildings = ['Cliffwatch Inn1', 'Cliffwatch Inn2', 'Cliffwatch Inn3', 'Waterdeep Harber1',
-                        'Waterdeep Harber2', 'Waterdeep Harber3', 'Field of Triumph', 'Blackstaff Tower',
-                        'Castle Waterdeep', 'Builder\'s Hall', 'Aurora\'s Realms Shop',
-                        'The Plinth', 'The Grinning Lion Tavern']
+def initializeGame(numplayers, numai):
     board = deck.grabInitialBuildings(startingbuildings)
+
+    #shuffle decks
+    lords.shuffle()
+    quests.shuffle()
     deck.shuffle()
-    buildhall = {deck.draw():3 for i in range(4)}
+
+    #make players
+    players = player.Group(numplayers, numai)
+
+    #builders hall
+    #determine first player
+        #pick someone
+        #cycle list to that person
+        #has to come before money handout
+    #deal quests
+    #deal intrigue
+    #add quests to the inn
+    #hand out initial currency
+    startingGold = RVector(4,0,0,0,0,0,0,0,0)
+    players.goToFirst()
+    for i in range(numplayers):
+        players.getCurrent().recieveResources(startingGold)
+        startingGold.coin += 1
+        players.nextPlayer()
+
+    #finally add callbacks
     deck.buildings['The Stone House'].extraeffects[lambda board, player: len(board) - 13] = [board]
     deck.buildings['The Zoarstar'].extraeffects[lambda board, player:player.chooseBuilding(
         [b for b in board if b.occupant != player])] = [board]
     deck.buildings['The Palace of Waterdeep'].extraeffects[palaceOfWaterDeep] = [
         players]
-    print(*board)
-    print(*buildhall)
-    print(deck)
-    deck.buildings['The Stone House'].use(players[0])
+    return
+
+def main(numplayers, numai):
+    #shuffle decks using shuffle(deckobj, times) {for times random.shuffle(deck)}
+    initializeGame()
+    for round in range(8):
+        #update phase
+        print('')
+        #reset phase
+        print('')
+        #ambassador phase
+        print('')
+        #play phase
+        print('')
+        while agentsLeft():
+            print('')
+        #reassign phase
+        print('')
     return
 
 initializeGame()
 
 if '__name__' == '__main__':
     checkArgs()
-    main()
+
+    print('Welcome to Lords of Waterdeep RL Experiment')
+    print('Let\'s start by selecting the total number of players that are going to play')
+    numplayers = input('Please enter your selection(2-5):')
+    print('Great, it seems you selected {numplayers} total players')
+    numai = input('Now how many of these will be AIs?')
+
+    main(numplayers, numai)

@@ -1,43 +1,28 @@
 from resourcevector import RVector
 import sys
 
+numagents = [None,4,3,2,2]
+names = {'yellow':'Knights of the Shield', 'grey':'City Guard', 'blue':'Silverstars', 'green':'Harpers', 'red':'Red Sashes'}
+
 class Player:
-    def __init__(self, lord, totalagents, hand, quests):
+    lord = None
+    quests = []
+    intriguecards = []
+    buildings = []
+
+    def __init__(self, color, totalagents):
+        self.name = names[color]
+        self.color = color
         self.resources = RVector(0,0,0,0,0,0,0,0,0)
         self.fp = False
         self.haslieutenant = False
         self.hasambassador = False
-        self.lord = lord
         self.numagents = totalagents
-        self.buildings = []
-        self.quests = quests
-        self.intriguecards = hand
         self.totalagents = totalagents
         return
 
-    def incrementWhite(self, amount):
-        self.white += amount
-        return
-
-    def incrementBlack(self, amount):
-        self.black += amount
-        return
-
-    def incrementOrange(self, amount):
-        self.coin += amount
-        return
-
-    def incrementPurple(self, amount):
-        self.coin += amount
-        return
-
-    def incrementCoin(self, amount):
-        self.coin += amount
-        return
-
-    def incrementVP(self, amount):
-        self.score += amount
-        return
+    def assignLord(self, lord):
+        self.lord = lord
 
     def gainLieutenant(self):
         self.haslieutenant = True
@@ -75,3 +60,44 @@ class Player:
 
     def chooseToken(self, w, b, o, p):
         return
+
+class Group():
+    #AI models will be tied to a player color,
+    # order will be randomized?
+    #first is a color
+    def __init__(self, numplayers, numai, colors = ['yellow','grey','blue','green','red'], pcs = []):
+        if len(colors) != numplayers:
+            print('ERROR player.py line 70 Group __init__ list length mismatch')
+            return
+        if numplayers != numai + len(pcs):
+            print('ERROR player.py line 73 Group __init__ group size mismatch')
+        
+        self.numplayers = numplayers
+        for pc in pcs:
+            if pc.color not in colors:
+                print('ERROR')
+                return
+            colors.remove(pc.color)
+        self.colors = colors
+        self.players = [Player(color, numagents[numplayers]) for color in self.colors]
+        self.players.extend(pcs)
+        self.first = 0
+        self.current = self.first
+    
+    def getSpecific(self, color):
+        return self.players[self.colors.index(color)]
+
+    def getCurrent(self):
+        return self.players[self.current]
+
+    def goTo(self, color):
+        self.current = self.colors.index(color)
+
+    def goToFirst(self):
+        self.current = self.first
+
+    def goToLast(self):
+        self.current = self.numplayers - 1
+    
+    def nextPlayer(self):
+        current = self.current + 1 if self.current < self.numplayers else 0
