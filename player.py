@@ -7,7 +7,6 @@ names = {'yellow':'Knights of the Shield', 'grey':'City Guard', 'blue':'Silverst
 
 
 # complete order
-# test complete quest
 # add draw function to main game loop after each action to reduce player resource pool and add cards to player's lists
 # move onto intrigue cards
 
