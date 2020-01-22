@@ -44,66 +44,24 @@ class Quest:
         self.questtype = questtype
         self.mandatory = questtype == 'Mandatory'
         self.plotquest = plot
-        self.cost = RVector()
-        self.reward = RVector()
+        self.cost = cost
+        self.reward = reward
 
-        """ if verbose:
+        if verbose:
             print('Name: '+ str(self.name) + ' is a ' + str(type(self.name)))
             print('QuestType: '+ str(self.questtype) + ' is a ' + str(type(self.questtype)))
-            print('CoinCost: '+ str(self.coincost) + ' is a ' + str(type(self.coincost)))
-            print('CoinReward: '+ str(self.coinreward) + ' is a ' + str(type(self.coinreward)))
-            print('WhiteCost: '+ str(self.whitecost) + ' is a ' + str(type(self.whitecost)))
-            print('WhiteReward: '+ str(self.whitereward) + ' is a ' + str(type(self.whitereward)))
-            print('BlackCost: '+ str(self.blackcost) + ' is a ' + str(type(self.blackcost)))
-            print('BlackReward: '+ str(self.blackreward) + ' is a ' + str(type(self.blackreward)))
-            print('OrangeCost: '+ str(self.orangecost) + ' is a ' + str(type(self.orangecost)))
-            print('OrangeReward: '+ str(self.orangereward) + ' is a ' + str(type(self.orangereward)))
-            print('PurpleCost: '+ str(self.purplecost) + ' is a ' + str(type(self.purplecost)))
-            print('PurpleReward: '+ str(self.purplereward) + ' is a ' + str(type(self.purplereward)))
-            print('VPReward: '+ str(self.vpreward) + ' is a ' + str(type(self.vpreward)))
             print('PlotQuest: '+ str(self.plotquest) + ' is a ' + str(type(self.plotquest)))
-            print('Intrigue: '+ str(self.intrigue) + ' is a ' + str(type(self.intrigue))) """
         return
 
     def __repr__(self):
-        cost = []
-        """ if self.coincost > 0:
-            cost.append(str(self.coincost) + ' coin' + 's' if self.coincost > 1 else '')
-        if self.whitecost > 0:
-            cost.append(str(self.whitecost) + ' cleric' + ('s' if self.whitecost > 1 else ''))
-        if self.blackcost > 0:
-            cost.append(str(self.blackcost) + ' rogue' + ('s' if self.blackcost > 1 else ''))
-        if self.orangecost > 0:
-            cost.append(str(self.orangecost) + ' warrior' + ('s' if self.orangecost > 1 else ''))
-        if self.purplecost > 0:
-            cost.append(str(self.purplecost) + ' wizard' + ('s' if self.purplecost > 1 else ''))
-        
-        reward = []
-        if self.coinreward > 0:
-            reward.append(str(self.coinreward) + ' coin' + ('s' if self.coinreward > 1 else ''))
-        if self.whitereward > 0:
-            reward.append(str(self.whitereward) + ' cleric' + ('s' if self.whitereward > 1 else ''))
-        if self.blackreward > 0:
-            reward.append(str(self.blackreward) + ' rogue' + ('s' if self.blackreward > 1 else ''))
-        if self.orangereward > 0:
-            reward.append(str(self.orangereward) + ' warrior' + ('s' if self.orangereward > 1 else ''))
-        if self.purplereward > 0:
-            reward.append(str(self.purplereward) + ' wizard' + ('s' if self.purplereward > 1 else ''))
-        if self.vpreward > 0:
-            reward.append(str(self.vpreward) + ' victory point' + ('s' if self.vpreward > 1 else ''))
-        print(self.name)
-        print(cost)
-        print(reward)
-        
-        return "this is a " + self.questtype +  ' quest that costs ' + ', '.join(cost) + ' and rewards ' + ', '.join(reward) +'\n' """
-        return
+        return self.name + " is a " + self.questtype + ' quest that costs ' + str(self.cost) + ' and rewards ' + str(self.reward) +'\n'
 
-class Deck(list):
+class Deck():
 
     drawcallback = []
     shufflecallback = []
 
-    def __init__(self, iterable):
+    def __init__(self):
         qdf = pd.read_csv('quest_cards.csv')
         names = qdf['name'].tolist()
         questtypes = qdf['questtype'].tolist()
@@ -124,9 +82,13 @@ class Deck(list):
         choices = qdf['choice'].tolist()
         costs = [RVector(ccs[i], wcs[i], bcs[i], oncs[i], pcs[i], 0, 0, 0, 0) for i in range(len(names))]
         rewards = [RVector(crs[i], wrs[i], brs[i], onrs[i], prs[i], vps[i], intrigues[i], qs[i], choices[i]) for i in range(len(names))]
-        quests = [Quest(names[i], questtypes[i], plots[i], costs[i], rewards[i], True) for i in range(len(names))]
-        mandatory = [q for q in quests if q.questtype == 'Mandatory']
-        quests.remove(mandatory)
+        self.quests = [Quest(names[i], questtypes[i], plots[i], costs[i], rewards[i]) for i in range(len(names))]
+        self.mandatory = [q for q in self.quests if q.questtype == 'Mandatory']
+        for q in self.mandatory:
+            if q in self.quests:
+                self.quests.remove(q)
+            else:
+                print('ERROR line 91 mandatory quest not found in quest list')
 
     def __repr__(self):
         return super().__repr__()
@@ -144,3 +106,6 @@ class Deck(list):
         for c in callbacklist:
             c()
         return
+
+#deck = Deck()
+#print(*(deck.quests))

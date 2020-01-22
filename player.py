@@ -1,12 +1,21 @@
 from resourcevector import RVector
 import sys
+from quest import Quest
 
 numagents = [None,4,3,2,2]
 names = {'yellow':'Knights of the Shield', 'grey':'City Guard', 'blue':'Silverstars', 'green':'Harpers', 'red':'Red Sashes'}
 
+
+# complete order
+# test complete quest
+# add draw function to main game loop after each action to reduce player resource pool and add cards to player's lists
+# move onto intrigue cards
+
+
 class Player:
     lord = None
     quests = []
+    completed = []
     intriguecards = []
     buildings = []
 
@@ -32,10 +41,23 @@ class Player:
         self.hasambassador = value
         return
 
-    def drawIntrigue(self, num):
+    def gainIntrigue(self, cards):
+        self.intriguecards.extend(cards)
         return
 
-    def drawQuest(self, num):
+    def gainQuest(self, cards):
+        self.quests.extend(cards)
+        return
+
+    def completeQuest(self, index):
+        if self.resources < self.quests[index].cost:
+            print('ERROR quest cost too high')
+            return
+        quest = self.quests.pop(index)
+        self.resources = self.resources - quest.cost
+        self.resources = self.resources + quest.reward
+        #do callbacks?
+        self.completed.append(quest)
         return
 
     def buyBuilding(self, building):
@@ -45,21 +67,16 @@ class Player:
     def receiveResources(self, effects):
         increment = RVector(0,0,0,0,0,0,0,0,0)
         for e in effects:
-            for i in range(e.choice):
-                increment = self.chooseToken(increment, e.white, e.black, e.orange, e.purple)
-            self.drawQuest(e.quest)
-            self.drawIntrigue(e.intrigue)
             if e.choice == 0:
-                increment.white += e.white
-                increment.black += e.black
-                increment.orange += e.orange
-                increment.purple += e.purple
-            increment.coin += e.coin
-            increment.vp += e.vp
-        self.resources += increment
+                increment = increment + RVector(0,e.white,e.black,e.orange,e.purple,0,0,0,0)
+            else:
+                for i in range(e.choice):
+                    increment = self.chooseToken(increment, e.white, e.black, e.orange, e.purple)
+            increment = increment + RVector(e.coin,0,0,0,0,e.vp,e.intrigue,e.quest,0)
+        self.resources = self.resources + increment
 
-    def chooseToken(self, w, b, o, p):
-        return
+    def chooseToken(self, pool, w, b, o, p):
+        return pool
 
 class Group():
     #AI models will be tied to a player color,
