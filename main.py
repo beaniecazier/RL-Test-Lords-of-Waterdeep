@@ -24,6 +24,8 @@ lords = lord.Deck()
 quests = quest.Deck()
 deck = building.Deck()
 player = []
+inn = []
+hall = []
 
 def roll():
     return random.randint(0,5)
@@ -59,8 +61,11 @@ def initializeGame(numplayers, numai):
         #cycle list to that person
         #has to come before money handout
     #deal quests
+    for player in players:
+        player.gainQuest([quests.pop() for i in range(startingQuests)])
     #deal intrigue
     #add quests to the inn
+    inn = [quests.pop() for i in range(innSize)]
     #hand out initial currency
     startingGold = RVector(4,0,0,0,0,0,0,0,0)
     players.goToFirst()
@@ -73,8 +78,7 @@ def initializeGame(numplayers, numai):
     deck.buildings['The Stone House'].extraeffects[lambda board, player: len(board) - 13] = [board]
     deck.buildings['The Zoarstar'].extraeffects[lambda board, player:player.chooseBuilding(
         [b for b in board if b.occupant != player])] = [board]
-    deck.buildings['The Palace of Waterdeep'].extraeffects[palaceOfWaterDeep] = [
-        players]
+    deck.buildings['The Palace of Waterdeep'].extraeffects[palaceOfWaterDeep] = [players]
     return
 
 def main(numplayers, numai):
