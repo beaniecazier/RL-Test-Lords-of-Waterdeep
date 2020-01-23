@@ -2,6 +2,7 @@ import pandas as pd
 from resourcevector import RVector
 import quest
 import player
+import random
 import copy
 
 def assignMandatory(player, group, deck, card):
@@ -69,11 +70,25 @@ def specialAssignment(player, group, deck, card):
 def callInAFavor(player, group, deck, card):
     player.receiveResources([card.vector])
 
-""" def callForAdventurers(player, group, deck, card):
-
-def bribeAgent(player, group, deck, card):
+def callForAdventurers(player, group, deck, card):
+    player.receiveResources([card.vector])
+    ovec = RVector(0,1,1,1,1,0,0,0,1)
+    for p in group.players:
+        if p != player:
+            p.receiveResources([ovec])
 
 def freeDrinks(player, group, deck, card):
+    choice = RVector(0,0,0,0,0,0,0,0,0)
+    for i in range (card.vector.choice):
+        choice = player.chooseToken(choice,0,card.vector.white,card.vector.black,card.vector.orange,card.vector.purple)
+    player.receiveResources([choice])
+    num = random.randint(0,group.numplayers-1)
+    while num == group.current:
+        num = random.randint(0,group.numplayers-1)
+    opponent = group.players[num]
+    opponent.receiveResources([choice*-1])
+
+""" def bribeAgent(player, group, deck, card):
 
 def acceleratePlans(player, group, deck, card):
 
@@ -123,11 +138,11 @@ class Deck:
             if c.name in ['Fend Off Bandits','Foil the Zhentarim','Placate Angry Merchants','Quell Riots','Repel Drow Invaders','Stamp Out Cultists']:
                 c.addEffects([assignMandatory])
             if c.name == 'Call for Adventurers':
-                c.addEffects([])
+                c.addEffects([callForAdventurers])
             if c.name == 'Bribe Agent':
                 c.addEffects([])
             if c.name == 'Free Drinks':
-                c.addEffects([])
+                c.addEffects([freeDrinks])
             if c.name == 'Accelerate Plans':
                 c.addEffects([])
             if c.name == 'Bidding War':
@@ -159,12 +174,12 @@ playerA = group.players[0]
 playerB = group.players[1]
 playerC = group.players[2]
 #playerB.receiveResources([RVector(0,0,0,0,0,0,0,0,0)])
-playerA.gainIntrigue([deck.cards[19]])
+playerA.gainIntrigue([deck.cards[9]])
 print(*(playerA.intrigues))
 playerA.intrigues[0].doEffect(playerA,group,quests)
 print('Player A:')
 print(playerA.resources)
 print('Player B:')
-print(*playerB.quests)
+print(playerB.resources)
 print('Player C:')
-print(*playerC.quests)
+print(playerC.resources)
