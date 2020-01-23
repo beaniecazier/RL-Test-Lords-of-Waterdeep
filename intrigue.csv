@@ -1,51 +1,51 @@
-name,coin,white,black,orange,purple,vp,intrigue,quest,choice
-Ambush,0,0,0,1,0,0,0,0,0
-Ambush,0,0,0,1,0,0,0,0,0
-Arcane Mishap,0,0,0,0,1,0,1,0,1
-Arcane Mishap,0,0,0,0,1,0,1,0,1
-Assassination,2,0,1,0,0,0,0,0,1
-Assassination,2,0,1,0,0,0,0,0,1
-Bribe Agent,2,0,0,0,0,0,0,0,0
-Bribe Agent,2,0,0,0,0,0,0,0,0
-Free Drinks,0,1,1,1,1,0,0,0,1
-Free Drinks,0,1,1,1,1,0,0,0,1
-Lack of Faith,0,1,0,0,0,2,0,0,1
-Lack of Faith,0,1,0,0,0,2,0,0,1
-Accelerate Plans,0,0,0,0,0,0,0,0,0
-Bidding War,0,0,0,0,0,0,0,0,0
-Bidding War,0,0,0,0,0,0,0,0,0
-Bidding War,0,0,0,0,0,0,0,0,0
-Call for Adventurers,0,1,1,1,1,0,0,0,2
-Call for Adventurers,0,1,1,1,1,0,0,0,2
-Call in a Favor,4,1,2,2,1,0,0,0,1
-Call in a Favor,4,1,2,2,1,0,0,0,1
-Change of Plans,0,0,0,0,0,0,0,0,0
-Conscription,0,0,0,2,0,0,0,0,0
-Conscription,0,0,0,2,0,0,0,0,0
-Crime Wave,0,0,2,0,0,0,0,0,0
-Crime Wave,0,0,2,0,0,0,0,0,0
-Good Faith,0,2,0,0,0,0,0,0,0
-Good Faith,0,2,0,0,0,0,0,0,0
-Graduation Day,0,0,0,0,2,0,0,0,0
-Graduation Day,0,0,0,0,2,0,0,0,0
-Real Estate Deal,0,0,0,0,0,0,0,0,0
-Recall Agent,0,0,0,0,0,0,0,0,0
-Recall Agent,0,0,0,0,0,0,0,0,0
-Recruit Spies,0,0,2,0,0,3,0,0,0
-Request Assistance,0,0,0,2,0,3,0,0,0
-Research Agreement,0,0,0,0,1,5,0,0,0
-Sample Wares,0,0,0,0,0,0,0,0,0
-Sample Wares,0,0,0,0,0,0,0,0,0
-Special Assignment,0,0,0,0,0,0,0,0,0
-Special Assignment,0,0,0,0,0,0,0,0,0
-Spread the Wealth,4,0,0,0,0,0,0,0,0
-Spread the Wealth,4,0,0,0,0,0,0,0,0
-Summon the Faithful,0,1,0,0,0,5,0,0,0
-Tax Collection,4,0,0,0,0,4,0,0,0
-Tax Collection,4,0,0,0,0,4,0,0,0
-Fend Off Bandits,0,0,0,0,0,0,0,0,0
-Foil the Zhentarim,0,0,0,0,0,0,0,0,0
-Placate Angry Merchants,0,0,0,0,0,0,0,0,0
-Quell Riots,0,0,0,0,0,0,0,0,0
-Repel Drow Invaders,0,0,0,0,0,0,0,0,0
-Stamp Out Cultists,0,0,0,0,0,0,0,0,0
+name,coin,white,black,orange,purple,vp,intrigue,quest,choice,text
+Ambush,0,0,0,1,0,0,0,0,0,"Each opponent removes 1 ORANGE from their TAVERN and returns it to the supply.  For each opponent that could not do so, take 1 ORANGE from the supply and place it in your TAVERN"
+Ambush,0,0,0,1,0,0,0,0,0,"Each opponent removes 1 ORANGE from their TAVERN and returns it to the supply.  For each opponent that could not do so, take 1 ORANGE from the supply and place it in your TAVERN"
+Arcane Mishap,0,0,0,0,1,0,1,0,1,"Each opponent removes 1 PURPLE from their TAVERN and returns it to the supply.  For each opponent that could not do so, draw 1 INTRIGUE."
+Arcane Mishap,0,0,0,0,1,0,1,0,1,"Each opponent removes 1 PURPLE from their TAVERN and returns it to the supply.  For each opponent that could not do so, draw 1 INTRIGUE."
+Assassination,2,0,1,0,0,0,0,0,1,"Each opponent removes 1 BLACK from their TAVERN and returns it to the supply.  For each opponent that could not do so, take 2 COINS from the supply and place it in your TAVERN"
+Assassination,2,0,1,0,0,0,0,0,1,"Each opponent removes 1 BLACK from their TAVERN and returns it to the supply.  For each opponent that could not do so, take 2 COINS from the supply and place it in your TAVERN"
+Bribe Agent,2,0,0,0,0,0,0,0,0,Pay 2 COINS.  Choose an action space containing an opponent's AGENT.  You use theat space's action as though you had assigned an AGENT to it.
+Bribe Agent,2,0,0,0,0,0,0,0,0,Pay 2 COINS.  Choose an action space containing an opponent's AGENT.  You use theat space's action as though you had assigned an AGENT to it.
+Free Drinks,0,1,1,1,1,0,0,0,1,"Remove 1 ANY from an opponent's TAVERN, and hten place it in your TAVERN"
+Free Drinks,0,1,1,1,1,0,0,0,1,"Remove 1 ANY from an opponent's TAVERN, and hten place it in your TAVERN"
+Lack of Faith,0,1,0,0,0,2,0,0,1,"Each opponent removes 1 WHITE from their TAVERN and returns it to the supply.  For each opponent that could not do so, you score 2VPS."
+Lack of Faith,0,1,0,0,0,2,0,0,1,"Each opponent removes 1 WHITE from their TAVERN and returns it to the supply.  For each opponent that could not do so, you score 2VPS."
+Accelerate Plans,0,0,0,0,0,0,0,0,0,"Choose 1 of your AGENTS assigned to Waterdeep Harbor. Return it to your pool, then immediately assign 2 AGENTS"
+Bidding War,0,0,0,0,0,0,0,0,0,"Draw QUESTS from the deck equal to the number of players.  Keep one and pass the remaining QUESTS to the player on your left.  Each player, in turn, chooses one QUEST to keep and passes the rest to the left until every player has taken a QUEST."
+Bidding War,0,0,0,0,0,0,0,0,0,"Draw QUESTS from the deck equal to the number of players.  Keep one and pass the remaining QUESTS to the player on your left.  Each player, in turn, chooses one QUEST to keep and passes the rest to the left until every player has taken a QUEST."
+Bidding War,0,0,0,0,0,0,0,0,0,"Draw QUESTS from the deck equal to the number of players.  Keep one and pass the remaining QUESTS to the player on your left.  Each player, in turn, chooses one QUEST to keep and passes the rest to the left until every player has taken a QUEST."
+Call for Adventurers,0,1,1,1,1,0,0,0,2,Take 2 ANY from the SUPPLY and place them in your TAVERN.  Each opponent takes 1 ANY from the SUPPLY and places it in their TAVERN.
+Call for Adventurers,0,1,1,1,1,0,0,0,2,Take 2 ANY from the SUPPLY and place them in your TAVERN.  Each opponent takes 1 ANY from the SUPPLY and places it in their TAVERN.
+Call in a Favor,4,1,2,2,1,0,0,0,1,"Choose one of the following to take from the SUPPLY: 4 COINS, 2 ORANGE, 2 BLACK, 1 PURPLE, 1 WHITE"
+Call in a Favor,4,1,2,2,1,0,0,0,1,"Choose one of the following to take from the SUPPLY: 4 COINS, 2 ORANGE, 2 BLACK, 1 PURPLE, 1 WHITE"
+Change of Plans,0,0,0,0,0,0,0,0,0,Discard an uncompleted QUEST.  Score 6VP.  Each opponent can choose to discard an uncompleted QUEST to score 3VP. (You can discard a MANDATORY QUEST in this way.)
+Conscription,0,0,0,2,0,0,0,0,0,Take 2 ORANGE from the SUPPLY and place them in your TAVERN.  Choose 1 opponent.  That opponent takes 1 ORANGE from the SUPPLY and place it in their TAVERN.
+Conscription,0,0,0,2,0,0,0,0,0,Take 2 ORANGE from the SUPPLY and place them in your TAVERN.  Choose 1 opponent.  That opponent takes 1 ORANGE from the SUPPLY and place it in their TAVERN.
+Crime Wave,0,0,2,0,0,0,0,0,0,Take 2 BLACK from the SUPPLY and place them in your TAVERN.  Choose 1 opponent.  That opponent takes 1 BLACK from the SUPPLY and place it in their TAVERN.
+Crime Wave,0,0,2,0,0,0,0,0,0,Take 2 BLACK from the SUPPLY and place them in your TAVERN.  Choose 1 opponent.  That opponent takes 1 BLACK from the SUPPLY and place it in their TAVERN.
+Good Faith,0,2,0,0,0,0,0,0,0,Take 2 WHITE from the SUPPLY and place them in your TAVERN.  Choose 1 opponent.  That opponent takes 1 WHITE from the SUPPLY and place it in their TAVERN.
+Good Faith,0,2,0,0,0,0,0,0,0,Take 2 WHITE from the SUPPLY and place them in your TAVERN.  Choose 1 opponent.  That opponent takes 1 WHITE from the SUPPLY and place it in their TAVERN.
+Graduation Day,0,0,0,0,2,0,0,0,0,Take 2 PURPLE from the SUPPLY and place them in your TAVERN.  Choose 1 opponent.  That opponent takes 1 PURPLE from the SUPPLY and place it in their TAVERN.
+Graduation Day,0,0,0,0,2,0,0,0,0,Take 2 PURPLE from the SUPPLY and place them in your TAVERN.  Choose 1 opponent.  That opponent takes 1 PURPLE from the SUPPLY and place it in their TAVERN.
+Real Estate Deal,0,0,0,0,0,0,0,0,0,Discard a BUILDING under your control that currently has no AGENT assigned to it.  Then choose 1 BUILDING in BUILDER's HALL and put it under your control at no cost.
+Recall Agent,0,0,0,0,0,0,0,0,0,Return 1 of your assigned AGENTS to your pool
+Recall Agent,0,0,0,0,0,0,0,0,0,Return 1 of your assigned AGENTS to your pool
+Recruit Spies,0,0,2,0,0,3,0,0,1,Take 2 BLACK from the SUPPLY and place them in your TAVERN.  Each opponent can choose to give you 1 BLACK once to score 3VP.
+Request Assistance,0,0,0,2,0,3,0,0,1,Take 2 ORANGE from the SUPPLY and place them in your TAVERN.  Each opponent can choose to give you 1 ORANGE once to score 3VP.
+Research Agreement,0,0,0,0,1,5,0,0,1,Take 1 PURPLE from the SUPPLY and place them in your TAVERN.  Each opponent can choose to give you 1 PURPLE once to score 5VP.
+Sample Wares,0,0,0,0,0,0,0,0,0,"Assign 1 of your unused AGENTS to a BUILDING in BUILDER""S HALL.  You immediately use the effect of that BUILDING as though you controlled it."
+Sample Wares,0,0,0,0,0,0,0,0,0,"Assign 1 of your unused AGENTS to a BUILDING in BUILDER""S HALL.  You immediately use the effect of that BUILDING as though you controlled it."
+Special Assignment,0,0,0,0,0,0,0,0,0,"Choose a QUEST TYPE: ARCANA,COMMERCE, PIETY, SKULLDUGGERY, or WARFARE.  Draw and reveal QUESTS untill you reveal a card of the chosen type.  Keep the QUEST and discard the rest."
+Special Assignment,0,0,0,0,0,0,0,0,0,"Choose a QUEST TYPE: ARCANA,COMMERCE, PIETY, SKULLDUGGERY, or WARFARE.  Draw and reveal QUESTS untill you reveal a card of the chosen type.  Keep the QUEST and discard the rest."
+Spread the Wealth,4,0,0,0,0,0,0,0,0,Take 4 COINS from the SUPPLY and place them in your TAVERN.  Choose 1 opponent.  That opponent takes 2 COINS from the SUPPLY and place it in their TAVERN.
+Spread the Wealth,4,0,0,0,0,0,0,0,0,Take 4 COINS from the SUPPLY and place them in your TAVERN.  Choose 1 opponent.  That opponent takes 2 COINS from the SUPPLY and place it in their TAVERN.
+Summon the Faithful,0,1,0,0,0,5,0,0,1,Take 1 WHITE from the SUPPLY and place them in your TAVERN.  Each opponent can choose to give you 1 WHITE once to score 5VP.
+Tax Collection,4,0,0,0,0,4,0,0,1,Take 4 COINS from the SUPPLY and place them in your TAVERN.  Each opponent can choose to give you 4 COINS once to score 4VP.
+Tax Collection,4,0,0,0,0,4,0,0,1,Take 4 COINS from the SUPPLY and place them in your TAVERN.  Each opponent can choose to give you 4 COINS once to score 4VP.
+Fend Off Bandits,0,0,0,0,0,0,0,0,0,"Give the MANDATORY QUEST ""Fend Off Bandits"" to an opponent.  That opponent cannot complete any non-MANDATORY QUEST until this QUEST is completed.  Requires: 2 ORANGE, 1 PURPLE.  Rewards: 2VP"
+Foil the Zhentarim,0,0,0,0,0,0,0,0,0,"Give the MANDATORY QUEST ""Foil the Zhentarim"" to an opponent.  That opponent cannot complete any non-MANDATORY QUEST until this QUEST is completed.  Requires: 1 BLACK, 1 ORANGE, 1 PURPLE.  Rewards: 2VP"
+Placate Angry Merchants,0,0,0,0,0,0,0,0,0,"Give the MANDATORY QUEST ""Placate Angry Merchants"" to an opponent.  That opponent cannot complete any non-MANDATORY QUEST until this QUEST is completed.  Requires: 1 WHITE, 1 ORANGE, 1 PURPLE.  Rewards: 2VP"
+Quell Riots,0,0,0,0,0,0,0,0,0,"Give the MANDATORY QUEST ""Quell Riots"" to an opponent.  That opponent cannot complete any non-MANDATORY QUEST until this QUEST is completed.  Requires: 2 WHITE, 1 ORANGE.  Rewards: 2VP"
+Repel Drow Invaders,0,0,0,0,0,0,0,0,0,"Give the MANDATORY QUEST ""Repel Drow Invaders"" to an opponent.  That opponent cannot complete any non-MANDATORY QUEST until this QUEST is completed.  Requires: 1 WHITE, 1 BLACK, 1 PURPLE.  Rewards: 2VP"
+Stamp Out Cultists,0,0,0,0,0,0,0,0,0,"Give the MANDATORY QUEST ""Stamp Out Cultists"" to an opponent.  That opponent cannot complete any non-MANDATORY QUEST until this QUEST is completed.  Requires: 1 WHITE, 1 BLACK, 1 ORANGE.  Rewards: 2VP"

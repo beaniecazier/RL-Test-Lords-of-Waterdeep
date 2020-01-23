@@ -101,10 +101,11 @@ def recallAgent(player, group, deck, card):
 def sampleWares(player, group, deck, card): """
 
 class Intrigue:
-    def __init__(self, name, vector):
+    def __init__(self, name, vector, text):
         self.name = name
         self.vector = vector
         self.effects = []
+        self.text = text
         return
 
     def addEffects(self, effects):
@@ -133,7 +134,8 @@ class Deck:
         intrigues = df['intrigue'].tolist()
         qs = df['quest'].tolist()
         choices = df['choice'].tolist()
-        self.cards = [Intrigue(names[i],RVector(cs[i], ws[i], bs[i], ons[i], ps[i], vps[i], intrigues[i], qs[i], choices[i])) for i in range(len(names))]
+        texts = df['text'].tolist()
+        self.cards = [Intrigue(names[i],RVector(cs[i], ws[i], bs[i], ons[i], ps[i], vps[i], intrigues[i], qs[i], choices[i]),text[i]) for i in range(len(names))]
         for c in self.cards:
             if c.name in ['Fend Off Bandits','Foil the Zhentarim','Placate Angry Merchants','Quell Riots','Repel Drow Invaders','Stamp Out Cultists']:
                 c.addEffects([assignMandatory])
