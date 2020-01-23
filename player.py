@@ -76,6 +76,14 @@ class Player:
 
     def chooseToken(self, pool, w, b, o, p):
         return pool
+    
+    def chooseQuest(self, quests):
+        #pick a quest
+        #add quest to open quests
+        #return remaining
+        self.gainQuest([quests.pop()])
+        return quests
+
 
 class Group():
     #AI models will be tied to a player color,
@@ -116,4 +124,6 @@ class Group():
         self.current = self.numplayers - 1
     
     def nextPlayer(self):
-        current = self.current + 1 if self.current < self.numplayers else 0
+        self.current = self.current + 1 
+        if self.current >= self.numplayers:
+            self.current = 0

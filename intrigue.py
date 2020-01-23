@@ -10,7 +10,7 @@ def assignMandatory(player, group, deck, card):
     quest = deck.mandatory.pop(quests.mandatory.index(quests.find(card.name)))
     opponent.gainQuest([quest])
 
-def allOpponent(player, group, quests, card):
+def allOpponent(player, group, deck, card):
     ovec = copy.deepcopy(card.vector)
     ovec.coin = 0
     ovec.vp = 0
@@ -30,13 +30,13 @@ def allOpponent(player, group, quests, card):
             else:
                 p.receiveResources([ovec*-1])
 
-def chooseOneOpponent(player, group, quests, card):
+def chooseOneOpponent(player, group, deck, card):
     #choose opponent
     opponent = group.players[1]
     player.receiveResources([card.vector])
     opponent.receiveResources([card.vector*(1/2)])
 
-def allOpponentChoose(player, group, quests, card):
+def allOpponentChoose(player, group, deck, card):
     ovpvec = RVector(0,0,0,0,0,card.vector.vp,0,0,0)
     card.vector.vp = 0
     ovec = copy.deepcopy(card.vector)
@@ -49,27 +49,35 @@ def allOpponentChoose(player, group, quests, card):
             player.receiveResources([ovec])
             p.receiveResources([ovec*-1,ovpvec])
 
-""" def biddingWar(player, group, quests, card):
+def biddingWar(player, group, deck, card):
+    quests = [deck.draw(), deck.draw()]
+    if group.numplayers > 2:
+        for i in range(group.numplayers-2):
+            quests.append(deck.draw())
+    #group.goToCurrent()
+    for i in range(group.numplayers):
+        group.getCurrent().chooseQuest(quests)
+        group.nextPlayer()
 
-def specialAssignment(player, group, quests, card):
+""" def specialAssignment(player, group, deck, card):
 
-def callInAFavor(player, group, quests, card):
+def callInAFavor(player, group, deck, card):
 
-def callForAdventurers(player, group, quests, card):
+def callForAdventurers(player, group, deck, card):
 
-def bribeAgent(player, group, quests, card):
+def bribeAgent(player, group, deck, card):
 
-def freeDrinks(player, group, quests, card):
+def freeDrinks(player, group, deck, card):
 
-def acceleratePlans(player, group, quests, card):
+def acceleratePlans(player, group, deck, card):
 
-def changeOfPlans(player, group, quests, card):
+def changeOfPlans(player, group, deck, card):
 
-def realEstateDeal(player, group, quests, card):
+def realEstateDeal(player, group, deck, card):
 
-def recallAgent(player, group, quests, card):
+def recallAgent(player, group, deck, card):
 
-def sampleWares(player, group, quests, card): """
+def sampleWares(player, group, deck, card): """
 
 class Intrigue:
     def __init__(self, name, vector):
@@ -117,7 +125,7 @@ class Deck:
             if c.name == 'Accelerate Plans':
                 c.addEffects([])
             if c.name == 'Bidding War':
-                c.addEffects([])
+                c.addEffects([biddingWar])
             if c.name == 'Call in a Favor':
                 c.addEffects([])
             if c.name == 'Change of Plans':
@@ -138,20 +146,19 @@ class Deck:
                 c.addEffects([allOpponentChoose])
 
 deck = Deck()
-print(*(deck.cards))
 quests = quest.Deck()
-group = player.Group(2, 2,['red','blue'])
+quests.shuffle()
+group = player.Group(3, 3,['yellow','red','blue'])
 playerA = group.players[0]
 playerB = group.players[1]
+playerC = group.players[2]
 playerB.receiveResources([RVector(0,0,0,0,0,0,0,0,0)])
-playerA.gainIntrigue([deck.cards[32],deck.cards[33],deck.cards[34],deck.cards[41],deck.cards[42]])
+playerA.gainIntrigue([deck.cards[15]])
 print(*(playerA.intrigues))
-playerA.intrigues[0].doEffect(playerA,group,None)
-playerA.intrigues[1].doEffect(playerA,group,None)
-playerA.intrigues[2].doEffect(playerA,group,None)
-playerA.intrigues[3].doEffect(playerA,group,None)
-playerA.intrigues[4].doEffect(playerA,group,None)
+playerA.intrigues[0].doEffect(playerA,group,quests)
 print('Player A:')
-print(playerA.resources)
+print(*playerA.quests)
 print('Player B:')
-print(playerB.resources)
+print(*playerB.quests)
+print('Player C:')
+print(*playerC.quests)
