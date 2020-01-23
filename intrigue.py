@@ -37,16 +37,17 @@ def chooseOneOpponent(player, group, quests, card):
     opponent.receiveResources([card.vector*(1/2)])
 
 def allOpponentChoose(player, group, quests, card):
+    ovpvec = RVector(0,0,0,0,0,card.vector.vp,0,0,0)
+    card.vector.vp = 0
     ovec = copy.deepcopy(card.vector)
     if ovec.black > 0 or ovec.orange > 0:
         ovec = ovec * (1/2)
-    ovec.vp = 0
-    ovpvec = RVector(0,0,0,0,0,card.vector.vp,0,0,0)
-    card.vector.vp = 0
     player.receiveResources([card.vector])
     #offer choice
     for p in group.players:
-        p.receiveResources([ovec,ovpvec])
+        if p != player:
+            player.receiveResources([ovec])
+            p.receiveResources([ovec*-1,ovpvec])
 
 """ def biddingWar(player, group, quests, card):
 
@@ -142,10 +143,14 @@ quests = quest.Deck()
 group = player.Group(2, 2,['red','blue'])
 playerA = group.players[0]
 playerB = group.players[1]
-playerB.receiveResources([RVector(0,0,0,1,0,0,0,0,0)])
-playerA.gainIntrigue([deck.cards[24]])
+playerB.receiveResources([RVector(0,0,0,0,0,0,0,0,0)])
+playerA.gainIntrigue([deck.cards[32],deck.cards[33],deck.cards[34],deck.cards[41],deck.cards[42]])
 print(*(playerA.intrigues))
 playerA.intrigues[0].doEffect(playerA,group,None)
+playerA.intrigues[1].doEffect(playerA,group,None)
+playerA.intrigues[2].doEffect(playerA,group,None)
+playerA.intrigues[3].doEffect(playerA,group,None)
+playerA.intrigues[4].doEffect(playerA,group,None)
 print('Player A:')
 print(playerA.resources)
 print('Player B:')
