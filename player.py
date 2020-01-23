@@ -84,6 +84,9 @@ class Player:
         self.gainQuest([quests.pop()])
         return quests
 
+    def chooseQuestType(self):
+        #have current player choose a quest type
+        return 'Arcana'
 
 class Group():
     #AI models will be tied to a player color,

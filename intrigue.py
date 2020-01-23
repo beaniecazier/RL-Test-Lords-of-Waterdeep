@@ -59,9 +59,14 @@ def biddingWar(player, group, deck, card):
         group.getCurrent().chooseQuest(quests)
         group.nextPlayer()
 
-""" def specialAssignment(player, group, deck, card):
+def specialAssignment(player, group, deck, card):
+    questtype = player.chooseQuestType()
+    drawnquest = deck.draw()
+    while questtype != drawnquest.questtype:
+        drawnquest = deck.draw()
+    player.gainQuest([drawnquest])
 
-def callInAFavor(player, group, deck, card):
+""" def callInAFavor(player, group, deck, card):
 
 def callForAdventurers(player, group, deck, card):
 
@@ -137,7 +142,7 @@ class Deck:
             if c.name == 'Sample Wares':
                 c.addEffects([])
             if c.name == 'Special Assignment':
-                c.addEffects([])
+                c.addEffects([specialAssignment])
             if c.name in ['Ambush','Arcane Mishap','Assassination','Lack of Faith']:
                 c.addEffects([allOpponent])
             if c.name in ['Conscription','Crime Wave','Good Faith','Graduation Day','Spread the Wealth']:
@@ -153,7 +158,7 @@ playerA = group.players[0]
 playerB = group.players[1]
 playerC = group.players[2]
 playerB.receiveResources([RVector(0,0,0,0,0,0,0,0,0)])
-playerA.gainIntrigue([deck.cards[15]])
+playerA.gainIntrigue([deck.cards[38]])
 print(*(playerA.intrigues))
 playerA.intrigues[0].doEffect(playerA,group,quests)
 print('Player A:')
