@@ -45,22 +45,21 @@ import pandas as pd
 from resourcevector import RVector
 import random
 
-class Building:
-    effectvector = []
-    resourcepool = RVector(0, 0, 0, 0, 0, 0, 0, 0, 0)
-    ownervector = RVector(0, 0, 0, 0, 0, 0, 0, 0, 0)
-    owner = None
-    cumulative = False
-    occupant = None
-    showing = False
-    # this is a dictionary whose key is a lambda and value is a list of parameters needed
-    extraeffects = {}
-    coincost = False
-    tokencost = False
-    
+class Building:    
     def __init__(self, name, cost, effect, owner, coinpayment, tokenpayment):
         self.cost = cost
         self.name = name
+        self.owner = owner
+        self.effectvector = []
+        self.resourcepool = RVector(0, 0, 0, 0, 0, 0, 0, 0, 0)
+        self.ownervector = RVector(0, 0, 0, 0, 0, 0, 0, 0, 0)
+        self.cumulative = False
+        self.occupant = None
+        self.showing = False
+        # this is a dictionary whose key is a lambda and value is a list of parameters needed
+        self.extraeffects = {}
+        self.coincost = False
+        self.tokencost = False
 
         if tokenpayment > 0:
             self.effectvector.append(RVector(0,-1,-1,-1,-1,0,0,0,tokenpayment))

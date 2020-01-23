@@ -1,0 +1,51 @@
+name,coin,white,black,orange,purple,vp,intrigue,quest,choice
+Ambush,0,0,0,1,0,0,0,0,0
+Ambush,0,0,0,1,0,0,0,0,0
+Arcane Mishap,0,0,0,0,1,0,1,0,1
+Arcane Mishap,0,0,0,0,1,0,1,0,1
+Assassination,2,0,1,0,0,0,0,0,1
+Assassination,2,0,1,0,0,0,0,0,1
+Bribe Agent,2,0,0,0,0,0,0,0,0
+Bribe Agent,2,0,0,0,0,0,0,0,0
+Free Drinks,0,1,1,1,1,0,0,0,1
+Free Drinks,0,1,1,1,1,0,0,0,1
+Lack of Faith,0,1,0,0,0,2,0,0,1
+Lack of Faith,0,1,0,0,0,2,0,0,1
+Accelerate Plans,0,0,0,0,0,0,0,0,0
+Bidding War,0,0,0,0,0,0,0,0,0
+Bidding War,0,0,0,0,0,0,0,0,0
+Bidding War,0,0,0,0,0,0,0,0,0
+Call for Adventurers,0,1,1,1,1,0,0,0,2
+Call for Adventurers,0,1,1,1,1,0,0,0,2
+Call in a Favor,4,1,2,2,1,0,0,0,1
+Call in a Favor,4,1,2,2,1,0,0,0,1
+Change of Plans,0,0,0,0,0,0,0,0,0
+Conscription,0,0,0,2,0,0,0,0,0
+Conscription,0,0,0,2,0,0,0,0,0
+Crime Wave,0,0,2,0,0,0,0,0,0
+Crime Wave,0,0,2,0,0,0,0,0,0
+Good Faith,0,2,0,0,0,0,0,0,0
+Good Faith,0,2,0,0,0,0,0,0,0
+Graduation Day,0,0,0,0,2,0,0,0,0
+Graduation Day,0,0,0,0,2,0,0,0,0
+Real Estate Deal,0,0,0,0,0,0,0,0,0
+Recall Agent,0,0,0,0,0,0,0,0,0
+Recall Agent,0,0,0,0,0,0,0,0,0
+Recruit Spies,0,0,2,0,0,3,0,0,1
+Request Assistance,0,0,0,2,0,3,0,0,1
+Research Agreement,0,0,0,0,1,5,0,0,1
+Sample Wares,0,0,0,0,0,0,0,0,0
+Sample Wares,0,0,0,0,0,0,0,0,0
+Special Assignment,0,0,0,0,0,0,0,0,0
+Special Assignment,0,0,0,0,0,0,0,0,0
+Spread the Wealth,4,0,0,0,0,0,0,0,0
+Spread the Wealth,4,0,0,0,0,0,0,0,0
+Summon the Faithful,0,1,0,0,0,5,0,0,1
+Tax Collection,4,0,0,0,0,4,0,0,1
+Tax Collection,4,0,0,0,0,4,0,0,1
+Fend Off Bandits,0,0,0,0,0,0,0,0,0
+Foil the Zhentarim,0,0,0,0,0,0,0,0,0
+Placate Angry Merchants,0,0,0,0,0,0,0,0,0
+Quell Riots,0,0,0,0,0,0,0,0,0
+Repel Drow Invaders,0,0,0,0,0,0,0,0,0
+Stamp Out Cultists,0,0,0,0,0,0,0,0,0

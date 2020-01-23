@@ -12,13 +12,13 @@ names = {'yellow':'Knights of the Shield', 'grey':'City Guard', 'blue':'Silverst
 
 
 class Player:
-    lord = None
-    quests = []
-    completed = []
-    intriguecards = []
-    buildings = []
 
     def __init__(self, color, totalagents):
+        self.lord = None
+        self.quests = []
+        self.completed = []
+        self.intrigues = []
+        self.buildings = []
         self.name = names[color]
         self.color = color
         self.resources = RVector(0,0,0,0,0,0,0,0,0)
@@ -41,7 +41,7 @@ class Player:
         return
 
     def gainIntrigue(self, cards):
-        self.intriguecards.extend(cards)
+        self.intrigues.extend(cards)
         return
 
     def gainQuest(self, cards):

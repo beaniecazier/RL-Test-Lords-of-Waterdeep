@@ -35,8 +35,6 @@ from resourcevector import RVector
 typeslist = ['Commerce', 'Skullduggery', 'Warfare', 'Piety', 'Arcana', 'Mandatory']
 
 class Quest:
-    name = "unnamed quest"
-
     #def __init__(self, *args, **kwargs):
         #super().__init__(*args, **kwargs)
     def __init__(self, questname, questtype, plot, cost, reward, verbose=False):
@@ -107,5 +105,12 @@ class Deck():
             c()
         return
 
-#deck = Deck()
-#print(*(deck.quests))
+    def find(self, name):
+        for q in self.mandatory: 
+            if q.name == name:
+                return q
+        for q in self.quests: 
+            if q.name == name:
+                return q
+        print('ERROR quest not found in deck')
+        return None
