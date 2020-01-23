@@ -1,6 +1,7 @@
 from resourcevector import RVector
 import sys
 from quest import Quest
+import random
 
 numagents = [None,4,3,2,2]
 names = {'yellow':'Knights of the Shield', 'grey':'City Guard', 'blue':'Silverstars', 'green':'Harpers', 'red':'Red Sashes'}
@@ -67,14 +68,22 @@ class Player:
         increment = RVector(0,0,0,0,0,0,0,0,0)
         for e in effects:
             if e.choice == 0:
-                increment = increment + RVector(0,e.white,e.black,e.orange,e.purple,0,0,0,0)
+                increment = increment + RVector(e.coin,e.white,e.black,e.orange,e.purple,0,0,0,0)
             else:
                 for i in range(e.choice):
-                    increment = self.chooseToken(increment, e.white, e.black, e.orange, e.purple)
-            increment = increment + RVector(e.coin,0,0,0,0,e.vp,e.intrigue,e.quest,0)
+                    increment = self.chooseToken(increment,e.coin, e.white, e.black, e.orange, e.purple)
+            increment = increment + RVector(0,0,0,0,0,e.vp,e.intrigue,e.quest,0)
         self.resources = self.resources + increment
 
-    def chooseToken(self, pool, w, b, o, p):
+    def chooseToken(self, pool, c, w, b, o, p):
+        #make choice
+        choice = random.randint(0,4)
+        c=c if choice == 0 else 0
+        w=w if choice == 1 else 0
+        b=b if choice == 2 else 0
+        o=o if choice == 3 else 0
+        p=p if choice == 4 else 0
+        pool = pool + RVector(c,w,b,o,p,0,0,0,0)
         return pool
     
     def chooseQuest(self, quests):

@@ -66,9 +66,10 @@ def specialAssignment(player, group, deck, card):
         drawnquest = deck.draw()
     player.gainQuest([drawnquest])
 
-""" def callInAFavor(player, group, deck, card):
+def callInAFavor(player, group, deck, card):
+    player.receiveResources([card.vector])
 
-def callForAdventurers(player, group, deck, card):
+""" def callForAdventurers(player, group, deck, card):
 
 def bribeAgent(player, group, deck, card):
 
@@ -132,7 +133,7 @@ class Deck:
             if c.name == 'Bidding War':
                 c.addEffects([biddingWar])
             if c.name == 'Call in a Favor':
-                c.addEffects([])
+                c.addEffects([callInAFavor])
             if c.name == 'Change of Plans':
                 c.addEffects([])
             if c.name == 'Real Estate Deal':
@@ -157,12 +158,12 @@ group = player.Group(3, 3,['yellow','red','blue'])
 playerA = group.players[0]
 playerB = group.players[1]
 playerC = group.players[2]
-playerB.receiveResources([RVector(0,0,0,0,0,0,0,0,0)])
-playerA.gainIntrigue([deck.cards[38]])
+#playerB.receiveResources([RVector(0,0,0,0,0,0,0,0,0)])
+playerA.gainIntrigue([deck.cards[19]])
 print(*(playerA.intrigues))
 playerA.intrigues[0].doEffect(playerA,group,quests)
 print('Player A:')
-print(*playerA.quests)
+print(playerA.resources)
 print('Player B:')
 print(*playerB.quests)
 print('Player C:')
