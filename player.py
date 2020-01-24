@@ -1,16 +1,25 @@
 from resourcevector import RVector
 import sys
+from quest import Quest
+import random
 
 numagents = [None,4,3,2,2]
 names = {'yellow':'Knights of the Shield', 'grey':'City Guard', 'blue':'Silverstars', 'green':'Harpers', 'red':'Red Sashes'}
 
+
+# complete order
+# add draw function to main game loop after each action to reduce player resource pool and add cards to player's lists
+# move onto intrigue cards
+
+
 class Player:
-    lord = None
-    quests = []
-    intriguecards = []
-    buildings = []
 
     def __init__(self, color, totalagents):
+        self.lord = None
+        self.quests = []
+        self.completed = []
+        self.intrigues = []
+        self.buildings = []
         self.name = names[color]
         self.color = color
         self.resources = RVector(0,0,0,0,0,0,0,0,0)
@@ -32,10 +41,23 @@ class Player:
         self.hasambassador = value
         return
 
-    def drawIntrigue(self, num):
+    def gainIntrigue(self, cards):
+        self.intrigues.extend(cards)
         return
 
-    def drawQuest(self, num):
+    def gainQuest(self, cards):
+        self.quests.extend(cards)
+        return
+
+    def completeQuest(self, index):
+        if self.resources < self.quests[index].cost:
+            print('ERROR quest cost too high')
+            return
+        quest = self.quests.pop(index)
+        self.resources = self.resources - quest.cost
+        self.resources = self.resources + quest.reward
+        #do callbacks?
+        self.completed.append(quest)
         return
 
     def buyBuilding(self, building):
@@ -45,21 +67,35 @@ class Player:
     def receiveResources(self, effects):
         increment = RVector(0,0,0,0,0,0,0,0,0)
         for e in effects:
-            for i in range(e.choice):
-                increment = self.chooseToken(increment, e.white, e.black, e.orange, e.purple)
-            self.drawQuest(e.quest)
-            self.drawIntrigue(e.intrigue)
             if e.choice == 0:
-                increment.white += e.white
-                increment.black += e.black
-                increment.orange += e.orange
-                increment.purple += e.purple
-            increment.coin += e.coin
-            increment.vp += e.vp
-        self.resources += increment
+                increment = increment + RVector(e.coin,e.white,e.black,e.orange,e.purple,0,0,0,0)
+            else:
+                for i in range(e.choice):
+                    increment = self.chooseToken(increment,e.coin, e.white, e.black, e.orange, e.purple)
+            increment = increment + RVector(0,0,0,0,0,e.vp,e.intrigue,e.quest,0)
+        self.resources = self.resources + increment
 
-    def chooseToken(self, w, b, o, p):
-        return
+    def chooseToken(self, pool, c, w, b, o, p):
+        #make choice
+        choice = random.randint(0,4)
+        c=c if choice == 0 else 0
+        w=w if choice == 1 else 0
+        b=b if choice == 2 else 0
+        o=o if choice == 3 else 0
+        p=p if choice == 4 else 0
+        pool = pool + RVector(c,w,b,o,p,0,0,0,0)
+        return pool
+    
+    def chooseQuest(self, quests):
+        #pick a quest
+        #add quest to open quests
+        #return remaining
+        self.gainQuest([quests.pop()])
+        return quests
+
+    def chooseQuestType(self):
+        #have current player choose a quest type
+        return 'Arcana'
 
 class Group():
     #AI models will be tied to a player color,
@@ -100,4 +136,6 @@ class Group():
         self.current = self.numplayers - 1
     
     def nextPlayer(self):
-        current = self.current + 1 if self.current < self.numplayers else 0
+        self.current = self.current + 1 
+        if self.current >= self.numplayers:
+            self.current = 0

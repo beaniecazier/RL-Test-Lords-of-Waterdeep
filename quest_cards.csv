@@ -1,42 +1,67 @@
-name,questtype,cc,cr,wc,wr,bc,br,onc,onr,pc,pr,vp,plot,intrigue
-Expose Red Wizards' Spies,Arcana,2,0,1,0,2,0,1,0,2,0,20,0,1
-Host Festival for Sune,Arcana,4,0,0,2,0,0,2,0,2,0,9,0,0
-Infiltrate Halaster's Circle,Arcana,2,0,0,0,0,0,0,0,5,0,25,0,0
-Investigate Aberant Infestation,Arcana,0,0,1,0,0,0,1,0,2,0,13,0,1
-Recruit for Blackstaff Academy,Arcana,4,0,0,0,1,0,1,0,2,3,6,0,0
-Retrieve Ancient Artifacts,Arcana,0,4,0,0,1,0,2,0,2,0,11,0,0
-Steal Spellbook from Silverhand,Arcana,0,4,0,0,2,0,1,0,2,0,7,0,2
-Domesticate Owlbears,Arcana,0,2,1,0,0,0,0,1,2,0,8,0,0
-Ally with House Thann,Commerse,8,0,1,0,3,0,0,0,1,0,25,0,0
-Impersonate Adarbrent Noble,Commerse,4,0,1,0,2,0,2,0,1,0,18,0,2
-Safequard Eltorchul Mage,Commerse,4,0,0,0,1,0,1,0,1,2,4,0,0
-Spy on the House of Light,Commerse,2,6,0,0,2,0,3,0,0,0,6,0,0
-Thin the City Watch,Commerse,4,0,1,0,1,4,1,0,0,0,9,0,0
-Create a Shrine to Oghma,Piety,2,0,5,0,0,0,0,0,0,0,25,0,0
-Eliminate Vampire Coven,Piety,0,4,2,0,1,0,2,0,0,0,11,0,0
-Heal Fallen Gray Hand Soldiers,Piety,4,0,2,0,0,0,0,6,1,0,6,0,0
-Perform the Penance of Duty,Piety,4,0,2,1,0,0,2,1,0,0,12,0,0
-Recruit Paladins for Tyr,Piety,4,0,2,3,0,0,4,0,0,0,10,0,0
-Seal Gate to Cyric's Realm,Piety,4,0,2,0,3,0,0,0,0,0,20,0,0
-Build a Reputaton in Skullport,Skullduggery,4,0,0,0,3,0,1,0,0,0,10,0,1
-Establish Shadow Thieve's Guild,Skullduggery,0,0,0,0,8,0,1,0,1,0,25,0,0
-Expose Cult Corruption,Skullduggery,0,0,1,2,4,0,0,0,0,0,4,0,0
-Procure Stolen Goods,Skullduggery,6,0,0,0,3,0,0,0,0,0,8,0,2
-Raid on Undermountain,Skullduggery,0,2,1,0,4,0,2,0,1,0,20,0,0
-Steal From House Adarbrent,Skullduggery,0,6,0,0,4,0,1,0,1,0,10,0,0
-Take Over Rival Organization,Skullduggery,6,0,0,0,2,4,1,0,1,0,10,0,0
-Ambush Artor Morlin,Warfare,0,4,1,0,1,0,3,0,0,0,8,0,0
-Bolster City Guard,Warfare,0,0,0,0,2,0,9,0,0,0,25,0,0
-Confront the Xanathar,Warfare,0,2,1,0,2,0,4,0,1,0,20,0,0
-Defeat Uprising From Undermountain,Warfare,2,0,1,0,1,0,3,2,0,0,11,0,0
-Deliver an Ultimatum,Warfare,0,4,0,0,1,0,4,0,1,0,11,0,0
-Deliver Weapons to Selune's Temple,Warfare,2,0,0,2,1,0,4,0,1,0,9,0,0
-Raid Orc Stronghold,Warfare,0,4,0,0,2,0,4,0,0,0,8,0,0
-Repel Seawraiths,Warfare,0,2,1,0,0,0,4,0,1,0,15,0,0
-Train Bladesingers,Warfare,0,0,0,0,0,0,3,1,1,1,4,0,0
-Foil the Zhentarim,Mandatory,0,0,0,0,1,0,1,0,1,0,0,2,0
-Repel Drow Invaders,Mandatory,0,0,1,0,2,0,0,0,0,0,0,2,0
-Quell Riots,Mandatory,0,0,2,0,0,0,1,0,0,0,0,4,0
-Placate Angry Merchants,Mandatory,0,0,1,0,0,0,1,0,1,0,0,4,0
-Stamp Out Cultists,Mandatory,0,0,1,0,1,0,1,0,0,0,0,2,0
-Fend Off Bandits,Mandatory,0,0,0,0,0,0,2,0,1,0,0,2,0
+name,questtype,plot,cc,wc,bc,onc,pc,cr,wr,br,onr,pr,vp,intrigue,quest,choice
+Expose Red Wizards' Spies,Arcana,0,2,1,2,1,2,0,0,0,0,0,20,1,0,0
+Host Festival for Sune,Arcana,0,4,0,0,2,2,0,2,0,0,0,9,0,0,0
+Infiltrate Halaster's Circle,Arcana,0,2,0,0,0,5,0,0,0,0,0,25,0,0,0
+Investigate Aberant Infestation,Arcana,0,0,1,0,1,2,0,0,0,0,0,13,1,0,0
+Recruit for Blackstaff Academy,Arcana,0,4,0,1,1,2,0,0,0,0,3,6,0,0,0
+Research Chronomancy,Arcana,0,4,0,0,0,2,0,0,0,0,1,4,0,0,0
+Retrieve Ancient Artifacts,Arcana,0,0,0,1,2,2,4,0,0,0,0,11,0,0,0
+Steal Spellbook from Silverhand,Arcana,0,0,0,2,1,2,4,0,0,0,0,7,2,0,0
+Domesticate Owlbears,Arcana,0,0,1,0,0,2,2,0,0,1,0,8,0,0,0
+Ally with House Thann,Commerse,0,8,1,3,0,1,0,0,0,0,0,25,0,0,0
+Impersonate Adarbrent Noble,Commerse,0,4,1,2,2,1,0,0,0,0,0,18,2,0,0
+Loot the Crypt of Chauntea,Commerse,0,2,1,3,0,0,0,0,0,0,0,7,1,1,0
+Lure Artisans of Mirabar,Commerse,0,2,1,1,1,0,0,0,0,0,0,4,0,0,0
+Placate the Walking Statue,Commerse,0,4,2,2,0,0,0,0,0,0,0,10,0,0,0
+Safequard Eltorchul Mage,Commerse,0,4,0,1,1,1,0,0,0,0,2,4,0,0,0
+Send Aid to the Harpers,Commerse,0,4,1,1,1,0,0,0,0,0,0,15,0,0,0
+Spy on the House of Light,Commerse,0,2,0,2,3,0,6,0,0,0,0,6,0,0,0
+Thin the City Watch,Commerse,0,4,1,1,1,0,0,0,4,0,0,9,0,0,0
+Convert a Noble to Lathander,Piety,0,0,2,0,1,0,0,0,0,0,0,8,0,1,0
+Create a Shrine to Oghma,Piety,0,2,5,0,0,0,0,0,0,0,0,25,0,0,0
+Discover Hidden Temple to Lolth,Piety,0,0,2,1,1,0,0,0,0,0,0,10,0,1,0
+Eliminate Vampire Coven,Piety,0,0,2,1,2,0,4,0,0,0,0,11,0,0,0
+Form an Alliance with the Rashemi,Piety,0,0,2,0,0,1,0,0,0,0,0,10,0,1,0
+Heal Fallen Gray Hand Soldiers,Piety,0,4,2,0,0,1,0,0,0,6,0,6,0,0,0
+Perform the Penance of Duty,Piety,0,4,2,0,2,0,0,1,0,1,0,12,0,0,0
+Recruit Paladins for Tyr,Piety,0,4,2,0,4,0,0,3,0,0,0,10,0,0,0
+Seal Gate to Cyric's Realm,Piety,0,4,2,3,0,0,0,0,0,0,0,20,0,0,0
+Build a Reputaton in Skullport,Skullduggery,0,4,0,3,1,0,0,0,0,0,0,10,1,0,0
+Establish Harpers Safe House,Skullduggery,0,2,0,3,2,0,0,0,0,0,0,8,0,0,0
+Establish Shadow Thieve's Guild,Skullduggery,0,0,0,8,1,1,0,0,0,0,0,25,0,0,0
+Expose Cult Corruption,Skullduggery,0,0,1,4,0,0,0,2,0,0,0,4,0,0,0
+Prison Break,Skullduggery,0,2,0,4,0,2,0,0,0,2,0,14,0,0,0
+Procure Stolen Goods,Skullduggery,0,6,0,3,0,0,0,0,0,0,0,8,2,0,0
+Raid on Undermountain,Skullduggery,0,0,1,4,2,1,2,0,0,0,0,20,0,0,0
+Steal From House Adarbrent,Skullduggery,0,0,0,4,1,1,6,0,0,0,0,10,0,0,0
+Take Over Rival Organization,Skullduggery,0,6,0,2,1,1,0,0,4,0,0,10,0,0,0
+Ambush Artor Morlin,Warfare,0,0,1,1,3,0,4,0,0,0,0,8,0,0,0
+Bolster City Guard,Warfare,0,0,0,2,9,0,0,0,0,0,0,25,0,0,0
+Confront the Xanathar,Warfare,0,0,1,2,4,1,2,0,0,0,0,20,0,0,0
+Defeat Uprising From Undermountain,Warfare,0,2,1,1,3,0,0,0,0,2,0,11,0,0,0
+Deliver an Ultimatum,Warfare,0,0,0,1,4,1,4,0,0,0,0,11,0,0,0
+Deliver Weapons to Selune's Temple,Warfare,0,2,0,1,4,1,0,2,0,0,0,9,0,0,0
+Raid Orc Stronghold,Warfare,0,0,0,2,4,0,4,0,0,0,0,8,0,0,0
+Repel Seawraiths,Warfare,0,0,1,0,4,1,2,0,0,0,0,15,0,0,0
+Train Bladesingers,Warfare,0,0,0,0,3,1,0,0,0,1,1,4,0,0,0
+Expose Ahghairon's Tower,Arcana,1,2,0,0,1,2,0,0,0,0,0,6,0,0,0
+Recover the Magister's Orb,Arcana,1,0,0,3,0,2,0,0,0,0,0,6,0,0,0
+Study the Illusk,Arcana,1,0,1,0,0,2,0,0,0,0,0,8,0,0,0
+Bribe the Shipwrights,Commerse,1,4,0,4,0,1,0,0,0,0,0,10,0,0,0
+Establish New Merchant Guild,Commerse,1,4,1,0,2,0,0,0,0,0,0,8,0,0,0
+Infilrate Builder's Hall,Commerse,1,6,0,2,2,0,0,0,0,0,0,6,0,0,0
+Defend the Tower of Luck,Piety,1,0,2,1,1,1,0,1,1,1,1,0,0,0,1
+Product a Miracle for the Masses,Piety,1,4,2,0,0,0,0,0,0,0,0,5,0,0,0
+Protect the House of Wonder,Piety,1,2,2,0,1,0,0,0,0,0,0,8,0,0,0
+Fence Goods for Duke of Darkness,Skullduggery,1,4,0,3,1,0,0,0,0,0,0,6,0,0,0
+Install a Spy in Castle Waterdeep,Skullduggery,1,4,0,4,0,0,0,0,0,0,0,8,0,0,0
+Place a Sleeper Agent in Skullport,Skullduggery,1,0,0,4,1,1,0,0,0,0,0,0,0,0,0
+Bolster Griffon Cavalry,Warfare,1,4,0,0,4,0,0,0,0,0,0,6,0,0,0
+Quell Mercenary Uprising,Warfare,1,0,1,0,4,0,0,0,0,0,0,8,0,0,0
+Recruit Lieutenant,Warfare,1,0,1,1,5,1,0,0,0,0,0,0,0,0,0
+Foil the Zhentarim,Mandatory,0,0,0,1,1,1,0,0,0,0,0,2,0,0,0
+Repel Drow Invaders,Mandatory,0,0,1,2,0,0,0,0,0,0,0,2,0,0,0
+Quell Riots,Mandatory,0,0,2,0,1,0,0,0,0,0,0,4,0,0,0
+Placate Angry Merchants,Mandatory,0,0,1,0,1,1,0,0,0,0,0,4,0,0,0
+Stamp Out Cultists,Mandatory,0,0,1,1,1,0,0,0,0,0,0,2,0,0,0
+Fend Off Bandits,Mandatory,0,0,0,0,2,1,0,0,0,0,0,2,0,0,0
