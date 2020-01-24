@@ -93,7 +93,7 @@ class Deck():
                 print('ERROR line 91 mandatory quest not found in quest list')
 
     def __repr__(self):
-        return super().__repr__()
+        return ''.join([str(q) for q in self.quests])
 
     def draw(self):
         return self.quests.pop()
@@ -124,4 +124,4 @@ class Deck():
             random.shuffle(self.quests)
 
 deck = Deck()
-print(deck.quests[0])
+print(deck)
