@@ -38,7 +38,7 @@ class Deck():
         for name in lord_df.index:
             types = [lord_df.loc[name,'type1'],lord_df.loc[name,'type2']]
             self.lords[name] = Lord(types,name)
-            cards.append(name)
+            self.cards.append(name)
 
     def shuffle(self, times):
         for i in range(times):
