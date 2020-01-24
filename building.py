@@ -216,6 +216,3 @@ class Deck():
             print('\n'.join([str(self.buildings[b]) for b in self.buildings]))
         else:
             print('\n'.join(c for c in self.cards))
-
-deck = Deck()
-deck.debug()

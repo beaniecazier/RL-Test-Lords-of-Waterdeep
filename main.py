@@ -31,7 +31,7 @@ buildings = None
 board = None
 inn = []
 hall = []
-players = None
+group = None
 
 def roll():
     return random.randint(0,5)
@@ -40,8 +40,8 @@ def checkArgs():
     #whether tokens and resources should be limited or unlimited
     return
 
-def palaceOfWaterDeep(players, player):
-    for p in players:
+def palaceOfWaterDeep(group, player):
+    for p in group.players:
         p.setAmbassador(p == player)
 
 def buildersHall():
@@ -49,6 +49,15 @@ def buildersHall():
     return
             
 def initializeGame(numplayers, numai):
+    global lords
+    global quests
+    global intrigues
+    global buildings
+    global board
+    global group
+    global inn
+    global hall
+
     lords = lord.Deck()
     quests = quest.Deck()
     intrigues = intrigue.Deck()
@@ -60,33 +69,33 @@ def initializeGame(numplayers, numai):
     intrigues.shuffle()
     buildings.shuffle()
     #make players
-    players = player.Group(numplayers, numai, lords)
+    group = player.Group(numplayers, numai, lords, ['yellow', 'red'])
     #determine first player
         #pick someone
         #cycle list to that person
         #has to come before money handout
     #deal quests
-    for player in players:
-        player.gainQuest([quests.pop() for i in range(startingQuests)])
+    for p in group.players:
+        p.gainQuest([quests.draw() for i in range(startingQuests)])
     #deal intrigue
-    for player in players:
-        player.gainQuest([quests.pop() for i in range(startingIntrigue)])
+    for p in group.players:
+        p.gainIntrigue([intrigues.draw() for i in range(startingIntrigue)])
     #hand out initial currency
     startingGold = RVector(4,0,0,0,0,0,0,0,0)
-    players.goToFirst()
+    group.goToFirst()
     for i in range(numplayers):
-        players.getCurrent().recieveResources(startingGold)
+        group.getCurrent().receiveResources([startingGold])
         startingGold.coin += 1
-        players.nextPlayer()
+        group.nextPlayer()
     #add quests to the inn
     inn = [quests.draw() for i in range(innSize)]
     #builders hall
     hall = [buildings.draw() for i in range(hallSize)]
     #finally add callbacks
-    deck.buildings['The Stone House'].extraeffects[lambda board, player: len(board) - 13] = [board]
-    deck.buildings['The Zoarstar'].extraeffects[lambda board, player:player.chooseBuilding(
+    buildings.buildings['The Stone House'].extraeffects[lambda board, player: len(board) - 13] = [board]
+    buildings.buildings['The Zoarstar'].extraeffects[lambda board, player:player.chooseBuilding(
         [b for b in board if b.occupant != player])] = [board]
-    deck.buildings['The Palace of Waterdeep'].extraeffects[palaceOfWaterDeep] = [players]
+    buildings.buildings['The Palace of Waterdeep'].extraeffects[palaceOfWaterDeep] = [group]
     return
 
 def main(numplayers, numai):
@@ -107,7 +116,16 @@ def main(numplayers, numai):
         print('')
     return
 
-initializeGame()
+initializeGame(2, 2)
+print(group)
+print(quests)
+print(intrigues)
+print('Buildings on the board:')
+print(board)
+print('These quests are available in the inn')
+print('\n'.join(str(q) for q in inn))
+print('These buildings are available in the BUILDER\'S HALL')
+print('\n'.join(str(b) for b in hall))
 
 if '__name__' == '__main__':
     checkArgs()
