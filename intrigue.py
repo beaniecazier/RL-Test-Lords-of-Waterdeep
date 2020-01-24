@@ -173,3 +173,7 @@ class Deck:
         
     def __repr__(self):
         return '\n'.join([str(c) for c in self.cards])
+
+    def shuffle(self, times=1):
+        for i in range(times):
+            random.shuffle(self.cards)

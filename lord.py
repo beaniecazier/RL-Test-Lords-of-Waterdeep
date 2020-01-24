@@ -40,7 +40,7 @@ class Deck():
             self.lords[name] = Lord(types,name)
             self.cards.append(name)
 
-    def shuffle(self, times):
+    def shuffle(self, times = 1):
         for i in range(times):
             random.shuffle(self.cards)
 
