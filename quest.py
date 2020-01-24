@@ -53,7 +53,10 @@ class Quest:
         return
 
     def __repr__(self):
-        return self.name + " is a " + self.questtype + ' quest that costs ' + str(self.cost) + ' and rewards ' + str(self.reward) +'\n'
+        return self.name + " is a " + self.questtype + ' quest that costs:\n' + str(self.cost) + ' and rewards:\n' + str(self.reward) +'\n'
+
+    def __str__(self):
+        return self.name + " is a " + self.questtype + ' quest that costs:\n' + str(self.cost) + ' and rewards:\n' + str(self.reward) +'\n'
 
 class Deck():
 
@@ -119,3 +122,6 @@ class Deck():
     def shuffle(self,num=1):
         for i in range(num):
             random.shuffle(self.quests)
+
+deck = Deck()
+print(deck.quests[0])
