@@ -163,6 +163,9 @@ class Deck():
                                         effect_df.loc[name,'payany'])
         return
 
+    def __str__(self):
+        return '\n'.join([str(self.buildings[b]) for b in self.buildings])
+
     def draw(self):
         return self.buildings[self.cards.pop()].reveal()
 
@@ -179,3 +182,6 @@ class Deck():
 
     def grabInitialBuildings(self, names):
         return [self.buildings[self.remove(name)] for name in names]
+
+deck = Deck()
+print(deck)
