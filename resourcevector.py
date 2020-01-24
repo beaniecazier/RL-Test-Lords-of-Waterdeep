@@ -45,6 +45,26 @@ class RVector():
                           (' {0!s} choice').format(abs(self.choice)) + ('s' if abs(self.choice) > 1 else ''))
         return ', '.join(pieces)
 
+    def __str__(self):
+        coin = '<{} COIN'.format(self.coin) + ('S' if abs(self.coin) > 1 else '')
+        token = ', {} WHITE, {} BLACK, {} ORANGE, {} PURPLE, {} VP, '.format(self.white, self.black, self.orange, self.purple, self.vp)
+        intrigues = ''
+        if self.intrigue > 0:
+            intrigues = '{} intrigue'.format(self.intrigue)+ ('s' if abs(self.intrigue) > 1 else '') + ' remaining to be dealt, '
+        elif self.intrigue < 0:
+            intrigues = 'ERROR cannot have negative intrigues in resource vector, '
+        quests = ''
+        if self.quest > 0:
+            quests = '{} quest'.format(self.quest)+ ('s' if abs(self.quest) > 1 else '') + ' remaining to be dealt, '
+        elif self.quest < 0:
+            quests = 'ERROR cannot have negative quests in resource vector, '
+        choices = ''
+        if self.choice > 0:
+            choices = '{} choice'.format(self.choice)+ ('s' if abs(self.choice) > 1 else '') + ' remaining to be made, '
+        elif self.choice < 0:
+            choices = 'ERROR cannot have negative choices in resource vector'
+        return coin + token + intrigues + quests + choices + '>'
+
     def __add__(self, other):
         coin = self.coin + other.coin
         white = self.white + other.white

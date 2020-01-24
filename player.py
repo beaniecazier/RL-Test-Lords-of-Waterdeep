@@ -11,6 +11,38 @@ names = {'yellow':'Knights of the Shield', 'grey':'City Guard', 'blue':'Silverst
 # add draw function to main game loop after each action to reduce player resource pool and add cards to player's lists
 # move onto intrigue cards
 
+def formatOpen(quests):
+    ret = ''
+    if len(quests) == 0:
+        return 'No open quests\n'
+    for q in quests:
+        if q.questtype == 'MANDATORY':
+            ret += str(q) + '\n'
+    for q in quests:
+        if (q.questtype != 'MANDATORY') and q.plot:
+            ret += str(q) + '\n'
+    for q in quests:
+        if (q.questtype != 'MANDATORY') and not q.plot:
+            ret += str(q) + '\n'
+    return ret
+
+def formatPlot(completed):
+    ret = ''
+    plot = [q for q in completed if q.plot]
+    if len(plot) == 0:
+        return 'No completed plot quests\n'
+    for q in plot:
+        ret += str(q) + '\n'
+    return ret
+
+def formatClosed(completed):
+    ret = ''
+    if len([q for q in completed if not q.plot]) == 0:
+        return 'No completed non-plot quests\n'
+    for q in completed:
+        if not q.plot:
+            ret += str(q) + '\n'
+    return ret
 
 class Player:
 
@@ -29,6 +61,19 @@ class Player:
         self.numagents = totalagents
         self.totalagents = totalagents
         return
+
+    def __str__(self):
+        color  = self.color + ' player has the folowwing resources\n' + str(self.resources) + '\n'
+        agents = str(self.numagents) + ' AGENTS left to be played this round'
+        if self.haslieutenant:
+            agents += ' and has the lieutenant'
+        if self.hasambassador:
+            agents += ' and has the ambassador'
+        intrigues = '\nhas {} INTRIGUE cards in hand\n'.format(len(self.intrigues))
+        openquests = 'has the following open quests:\n' + formatOpen(self.quests)
+        plotquests = 'has the following completed plot quests:\n' + formatPlot(self.completed)
+        closedquests = 'has the following closed quests:\n' + formatClosed(self.completed)
+        return color+agents+intrigues+openquests+plotquests+closedquests
 
     def assignLord(self, lord):
         self.lord = lord
@@ -78,6 +123,8 @@ class Player:
     def chooseToken(self, pool, c, w, b, o, p):
         #make choice
         choice = random.randint(0,4)
+        while (choice == 0 and c == 0) or (choice == 1 and w == 0) or (choice == 2 and b == 0) or (choice == 3 and o == 0) or (choice == 4 and p == 0):
+            choice = random.randint(0,4)
         c=c if choice == 0 else 0
         w=w if choice == 1 else 0
         b=b if choice == 2 else 0
@@ -101,7 +148,7 @@ class Group():
     #AI models will be tied to a player color,
     # order will be randomized?
     #first is a color
-    def __init__(self, numplayers, numai, colors = ['yellow','grey','blue','green','red'], pcs = []):
+    def __init__(self, numplayers, numai, lords, colors = ['yellow','grey','blue','green','red'], pcs = []):
         if len(colors) != numplayers:
             print('ERROR player.py line 70 Group __init__ list length mismatch')
             return
@@ -117,6 +164,8 @@ class Group():
         self.colors = colors
         self.players = [Player(color, numagents[numplayers]) for color in self.colors]
         self.players.extend(pcs)
+        for p in self.players:
+            p.assignLord(lords.draw())
         self.first = 0
         self.current = self.first
     
@@ -139,3 +188,7 @@ class Group():
         self.current = self.current + 1 
         if self.current >= self.numplayers:
             self.current = 0
+
+p = Player('red',4)
+p.receiveResources([RVector(10,0,0,0,5,8,1,1,1)])
+print(p)

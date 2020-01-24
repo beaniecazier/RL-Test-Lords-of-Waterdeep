@@ -8,6 +8,7 @@ import building
 import player
 import quest
 import lord
+import intrigue
 from resourcevector import RVector
 
 #Builder's hall is a list of length 4 containing tuples
@@ -19,18 +20,21 @@ startingbuildings = ['Cliffwatch Inn1', 'Cliffwatch Inn2', 'Cliffwatch Inn3', 'W
                     'Waterdeep Harber2', 'Waterdeep Harber3', 'Field of Triumph', 'Blackstaff Tower',
                     'Castle Waterdeep', 'Builder\'s Hall', 'Aurora\'s Realms Shop',
                     'The Plinth', 'The Grinning Lion Tavern']
-
-lords = lord.Deck()
-quests = quest.Deck()
-deck = building.Deck()
-player = []
+startingQuests = 2
+startingIntrigue = 2
+innSize = 4
+hallSize = 4
+lords = None
+quests = None
+intrigues = None
+buildings = None
+board = None
 inn = []
 hall = []
+players = None
 
 def roll():
     return random.randint(0,5)
-
-#players = []
 
 def checkArgs():
     #whether tokens and resources should be limited or unlimited
@@ -45,17 +49,18 @@ def buildersHall():
     return
             
 def initializeGame(numplayers, numai):
-    board = deck.grabInitialBuildings(startingbuildings)
-
+    lords = lord.Deck()
+    quests = quest.Deck()
+    intrigues = intrigue.Deck()
+    buildings = building.Deck()
+    board = buildings.grabInitialBuildings(startingbuildings)
     #shuffle decks
     lords.shuffle()
     quests.shuffle()
-    deck.shuffle()
-
+    intrigues.shuffle()
+    buildings.shuffle()
     #make players
-    players = player.Group(numplayers, numai)
-
-    #builders hall
+    players = player.Group(numplayers, numai, lords)
     #determine first player
         #pick someone
         #cycle list to that person
@@ -64,8 +69,8 @@ def initializeGame(numplayers, numai):
     for player in players:
         player.gainQuest([quests.pop() for i in range(startingQuests)])
     #deal intrigue
-    #add quests to the inn
-    inn = [quests.pop() for i in range(innSize)]
+    for player in players:
+        player.gainQuest([quests.pop() for i in range(startingIntrigue)])
     #hand out initial currency
     startingGold = RVector(4,0,0,0,0,0,0,0,0)
     players.goToFirst()
@@ -73,7 +78,10 @@ def initializeGame(numplayers, numai):
         players.getCurrent().recieveResources(startingGold)
         startingGold.coin += 1
         players.nextPlayer()
-
+    #add quests to the inn
+    inn = [quests.draw() for i in range(innSize)]
+    #builders hall
+    hall = [buildings.draw() for i in range(hallSize)]
     #finally add callbacks
     deck.buildings['The Stone House'].extraeffects[lambda board, player: len(board) - 13] = [board]
     deck.buildings['The Zoarstar'].extraeffects[lambda board, player:player.chooseBuilding(
