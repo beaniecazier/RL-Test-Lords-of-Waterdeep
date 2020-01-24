@@ -191,6 +191,9 @@ class Deck():
     def __str__(self):
         return '\n'.join([str(self.buildings[b]) for b in self.buildings])
 
+    def __repr__(self):
+        return '\n'.join([str(self.buildings[b]) for b in self.buildings])
+
     def draw(self):
         return self.buildings[self.cards.pop()].reveal()
 
