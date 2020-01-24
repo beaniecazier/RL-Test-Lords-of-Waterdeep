@@ -167,21 +167,9 @@ class Deck:
                 c.addEffects([chooseOneOpponent])
             if c.name in ['Recruit Spies','Request Assistance','Research Agreement','Summon the Faithful','Tax Collection']:
                 c.addEffects([allOpponentChoose])
-
-deck = Deck()
-quests = quest.Deck()
-quests.shuffle()
-group = player.Group(3, 3,['yellow','red','blue'])
-playerA = group.players[0]
-playerB = group.players[1]
-playerC = group.players[2]
-#playerB.receiveResources([RVector(0,0,0,0,0,0,0,0,0)])
-playerA.gainIntrigue([deck.cards[9]])
-print(*(playerA.intrigues))
-playerA.intrigues[0].doEffect(playerA,group,quests)
-print('Player A:')
-print(playerA.resources)
-print('Player B:')
-print(playerB.resources)
-print('Player C:')
-print(playerC.resources)
+    
+    def __str__(self):
+        return '\n'.join([str(c) for c in self.cards])
+        
+    def __repr__(self):
+        return '\n'.join([str(c) for c in self.cards])

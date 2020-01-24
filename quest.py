@@ -95,6 +95,9 @@ class Deck():
     def __repr__(self):
         return ''.join([str(q) for q in self.quests])
 
+    def __str__(self):
+        return ''.join([str(q) for q in self.quests])
+
     def draw(self):
         return self.quests.pop()
 
@@ -122,6 +125,3 @@ class Deck():
     def shuffle(self,num=1):
         for i in range(num):
             random.shuffle(self.quests)
-
-deck = Deck()
-print(deck)
