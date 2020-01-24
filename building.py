@@ -189,10 +189,10 @@ class Deck():
         return
 
     def __str__(self):
-        return '\n'.join([str(self.buildings[b]) for b in self.buildings])
+        return 'The BUILDING deck has {} BUILDINGS left in it'.format(len(self.cards))
 
     def __repr__(self):
-        return '\n'.join([str(self.buildings[b]) for b in self.buildings])
+        return 'The BUILDING deck has {} BUILDINGS left in it'.format(len(self.cards))
 
     def draw(self):
         return self.buildings[self.cards.pop()].reveal()
@@ -210,6 +210,12 @@ class Deck():
 
     def grabInitialBuildings(self, names):
         return [self.buildings[self.remove(name)] for name in names]
+    
+    def debug(self, verbose = False):
+        if verbose:
+            print('\n'.join([str(self.buildings[b]) for b in self.buildings]))
+        else:
+            print('\n'.join(c for c in self.cards))
 
 deck = Deck()
-print(deck)
+deck.debug()

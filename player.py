@@ -20,16 +20,16 @@ def formatOpen(quests):
         if q.questtype == 'MANDATORY':
             ret += str(q) + '\n'
     for q in quests:
-        if (q.questtype != 'MANDATORY') and q.plot:
+        if (q.questtype != 'MANDATORY') and q.plotquest:
             ret += str(q) + '\n'
     for q in quests:
-        if (q.questtype != 'MANDATORY') and not q.plot:
+        if (q.questtype != 'MANDATORY') and not q.plotquest:
             ret += str(q) + '\n'
     return ret
 
 def formatPlot(completed):
     ret = ''
-    plot = [q for q in completed if q.plot]
+    plot = [q for q in completed if q.plotquest]
     if len(plot) == 0:
         return 'No completed plot quests\n'
     for q in plot:
@@ -38,10 +38,10 @@ def formatPlot(completed):
 
 def formatClosed(completed):
     ret = ''
-    if len([q for q in completed if not q.plot]) == 0:
+    if len([q for q in completed if not q.plotquest]) == 0:
         return 'No completed non-plot quests\n'
     for q in completed:
-        if not q.plot:
+        if not q.plotquest:
             ret += str(q) + '\n'
     return ret
 

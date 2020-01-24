@@ -93,10 +93,10 @@ class Deck():
                 print('ERROR line 91 mandatory quest not found in quest list')
 
     def __repr__(self):
-        return ''.join([str(q) for q in self.quests])
+        return 'The QUESTS deck has {} QUESTS left, with {} MANDATORY QUESTS left to be assigned'.format(len(self.quests), len(self.mandatory))
 
     def __str__(self):
-        return ''.join([str(q) for q in self.quests])
+        return 'The QUESTS deck has {} QUESTS left, with {} MANDATORY QUESTS left to be assigned'.format(len(self.quests), len(self.mandatory))
 
     def draw(self):
         return self.quests.pop()
@@ -125,3 +125,6 @@ class Deck():
     def shuffle(self,num=1):
         for i in range(num):
             random.shuffle(self.quests)
+
+    def debug(self, verbose):
+        print(''.join([str(q) for q in self.quests]))
