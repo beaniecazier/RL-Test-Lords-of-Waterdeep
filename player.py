@@ -2,6 +2,7 @@ from resourcevector import RVector
 import sys
 from quest import Quest
 import random
+import lord
 
 numagents = [None,4,3,2,2]
 names = {'yellow':'Knights of the Shield', 'grey':'City Guard', 'blue':'Silverstars', 'green':'Harpers', 'red':'Red Sashes'}
@@ -149,9 +150,6 @@ class Group():
     # order will be randomized?
     #first is a color
     def __init__(self, numplayers, numai, lords, colors = ['yellow','grey','blue','green','red'], pcs = []):
-        if len(colors) != numplayers:
-            print('ERROR player.py line 70 Group __init__ list length mismatch')
-            return
         if numplayers != numai + len(pcs):
             print('ERROR player.py line 73 Group __init__ group size mismatch')
         
@@ -161,6 +159,9 @@ class Group():
                 print('ERROR')
                 return
             colors.remove(pc.color)
+        random.shuffle(colors)
+        while len(colors) != numai:
+            colors.pop()
         self.colors = colors
         self.players = [Player(color, numagents[numplayers]) for color in self.colors]
         self.players.extend(pcs)
@@ -168,6 +169,12 @@ class Group():
             p.assignLord(lords.draw())
         self.first = 0
         self.current = self.first
+    
+    def __repr__(self):
+        return '\n'.join(str(p) for p in self.players)
+    
+    def __str__(self):
+        return '\n'.join(str(p) for p in self.players)
     
     def getSpecific(self, color):
         return self.players[self.colors.index(color)]
@@ -188,7 +195,3 @@ class Group():
         self.current = self.current + 1 
         if self.current >= self.numplayers:
             self.current = 0
-
-p = Player('red',4)
-p.receiveResources([RVector(10,0,0,0,5,8,1,1,1)])
-print(p)

@@ -177,3 +177,6 @@ class Deck:
     def shuffle(self, times=1):
         for i in range(times):
             random.shuffle(self.cards)
+    
+    def draw(self):
+        return self.cards.pop()
