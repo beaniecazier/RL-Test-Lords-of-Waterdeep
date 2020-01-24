@@ -31,12 +31,11 @@
 
 import pandas as pd
 from resourcevector import RVector
+import random
 
 typeslist = ['Commerce', 'Skullduggery', 'Warfare', 'Piety', 'Arcana', 'Mandatory']
 
 class Quest:
-    name = "unnamed quest"
-
     #def __init__(self, *args, **kwargs):
         #super().__init__(*args, **kwargs)
     def __init__(self, questname, questtype, plot, cost, reward, verbose=False):
@@ -94,7 +93,7 @@ class Deck():
         return super().__repr__()
 
     def draw(self):
-        return self.pop()
+        return self.quests.pop()
 
     def subscribedrawevent(self):
         return
@@ -107,5 +106,16 @@ class Deck():
             c()
         return
 
-#deck = Deck()
-#print(*(deck.quests))
+    def find(self, name):
+        for q in self.mandatory: 
+            if q.name == name:
+                return q
+        for q in self.quests: 
+            if q.name == name:
+                return q
+        print('ERROR quest not found in deck')
+        return None
+
+    def shuffle(self,num=1):
+        for i in range(num):
+            random.shuffle(self.quests)
