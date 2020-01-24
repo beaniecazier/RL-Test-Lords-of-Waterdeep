@@ -58,7 +58,3 @@ class Deck():
             print('\n'.join(str(self.lords[l]) for l in self.lords))
         else:
             print('\n'.join(self.cards))
-
-deck = Deck()
-print(deck)
-deck.debug(True)

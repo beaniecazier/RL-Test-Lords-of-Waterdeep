@@ -169,10 +169,10 @@ class Deck:
                 c.addEffects([allOpponentChoose])
     
     def __str__(self):
-        return '\n'.join([str(c) for c in self.cards])
+        return 'The INTRIGUE deck has {} cards left'.format(len(self.cards))
         
     def __repr__(self):
-        return '\n'.join([str(c) for c in self.cards])
+        return 'The INTRIGUE deck has {} cards left'.format(len(self.cards))
 
     def shuffle(self, times=1):
         for i in range(times):
@@ -180,3 +180,9 @@ class Deck:
     
     def draw(self):
         return self.cards.pop()
+
+    def debug(self, verbose=False):
+        if verbose:
+            print('\n'.join([str(c) for c in self.cards]))
+        else:
+            print('\n'.join([c.name for c in self.cards]))
