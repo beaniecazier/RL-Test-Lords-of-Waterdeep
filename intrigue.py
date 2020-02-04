@@ -8,7 +8,7 @@ import copy
 def assignMandatory(player, group, deck, card):
     #get opponent choice
     opponent = group.players[0]
-    quest = deck.mandatory.pop(quests.mandatory.index(quests.find(card.name)))
+    quest = deck.mandatory.pop(deck.mandatory.index(deck.find(card.name)))
     opponent.gainQuest([quest])
 
 def allOpponent(player, group, deck, card):
