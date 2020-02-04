@@ -121,21 +121,21 @@ class Building:
             for effect in self.extraeffects.items():
                 print(effect[0](effect[1], player))
                 
-        player.receiveresources([self.resourcepool] if self.cumulative else self.effectvector)
+        player.receiveResources([self.resourcepool] if self.cumulative else self.effectvector)
 
         # reset cumulative to show player has taken all resources from pile
         if self.cumulative:
             self.resourcepool = RVector(0, 0, 0, 0, 0, 0, 0, 0, 0)
 
         # do owner effect
-        if self.owner != player:
-            owner.receiveresources([self.ownervector])
+        if self.owner != player and self.owner != None:
+            self.owner.receiveResources([self.ownervector])
         return
 
     def updatePile(self):
         if self.cumulative:
             for ev in self.effectvector:
-                self.resourcepool += ev
+                self.resourcepool = self.resourcepool + ev
         return
     
     def reveal(self):

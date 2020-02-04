@@ -134,7 +134,7 @@ class Player:
         pool = pool + RVector(c,w,b,o,p,0,0,0,0)
         return pool
     
-    def chooseQuest(self, quests):
+    def chooseFromPile(self, quests):
         #pick a quest
         #add quest to open quests
         #return remaining
@@ -144,6 +144,15 @@ class Player:
     def chooseQuestType(self):
         #have current player choose a quest type
         return 'Arcana'
+
+    def chooseQuest(self):
+        return 0
+
+    def playAgent(self):
+        return
+    
+    def playAmbassador(self, buildings):
+        return buildings[random.randint(0,len(buildings)-1)]
 
 class Group():
     #AI models will be tied to a player color,
@@ -195,3 +204,11 @@ class Group():
         self.current = self.current + 1 
         if self.current >= self.numplayers:
             self.current = 0
+
+    def resetAgents(self):
+        for p in self.players:
+            p.numagents = p.totalagents
+
+    def roundFive(self):
+        for p in self.players:
+            p.totalagents += 1

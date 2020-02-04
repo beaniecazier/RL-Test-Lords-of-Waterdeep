@@ -57,7 +57,7 @@ def biddingWar(player, group, deck, card):
             quests.append(deck.draw())
     #group.goToCurrent()
     for i in range(group.numplayers):
-        group.getCurrent().chooseQuest(quests)
+        group.getCurrent().chooseFromPile(quests)
         group.nextPlayer()
 
 def specialAssignment(player, group, deck, card):
