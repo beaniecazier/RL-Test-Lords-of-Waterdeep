@@ -74,6 +74,8 @@ class Building:
 
         if name == 'House of Good Spirits':
             self.effectvector.append(RVector(0, 0, 0, 1, 0, 0, 0, 0, 0))
+        if name == 'Northgate':
+            self.effectvector.append(RVector(2, 0, 0, 0, 0, 0, 0, 0, 0))
 
         if name in ['The Golden Horn', 'Spires of the Morning', 'Jester\'s Court', 'Caravan Court', 'Tower of the Order', 'The Waymoot']:
             self.cumulative = True
@@ -119,17 +121,17 @@ class Building:
 
         if len(self.extraeffects) > 0:
             for effect in self.extraeffects.items():
-                print(effect[0](effect[1], player))
-                
-        player.receiveResources([self.resourcepool] if self.cumulative else self.effectvector)
-
-        # reset cumulative to show player has taken all resources from pile
-        if self.cumulative:
-            self.resourcepool = RVector(0, 0, 0, 0, 0, 0, 0, 0, 0)
+                effect[0](effect[1], player)
 
         # do owner effect
         if self.owner != player and self.owner != None:
             self.owner.receiveResources([self.ownervector])
+        else:
+            player.receiveResources([self.resourcepool] if self.cumulative else self.effectvector)
+            # reset cumulative to show player has taken all resources from pile
+            if self.cumulative:
+                self.resourcepool = RVector(0, 0, 0, 0, 0, 0, 0, 0, 0)
+
         return
 
     def updatePile(self):
