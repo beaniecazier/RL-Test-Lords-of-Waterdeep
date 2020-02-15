@@ -45,6 +45,7 @@ class Quest:
         self.plotquest = plot
         self.cost = cost
         self.reward = reward
+        self.effect = {}
 
         if verbose:
             print('Name: '+ str(self.name) + ' is a ' + str(type(self.name)))
@@ -57,6 +58,9 @@ class Quest:
 
     def __str__(self):
         return self.name + " is a " + self.questtype + ' quest that costs:\n' + str(self.cost) + ' and rewards:\n' + str(self.reward) +'\n'
+    
+    def addEffect(self, effect, params):
+        self.effect[effect] = params
 
 class Deck():
 

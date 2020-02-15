@@ -112,6 +112,7 @@ class Intrigue:
         self.effects.extend(effects)
     
     def doEffect(self, player, players, deck):
+        # check if has plot quest PLACE A SLEEPER AGENT IN SKULLPORT completed
         for e in self.effects:
             e(player, players, deck, self)
 

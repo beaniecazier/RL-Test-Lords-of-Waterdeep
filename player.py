@@ -103,6 +103,10 @@ class Player:
         self.resources = self.resources - quest.cost
         self.resources = self.resources + quest.reward
         #do callbacks?
+        # if has one of 5 plot quests completed and quest.questtype == plotquest.questtype
+        # then score 2 VP
+        # if have one of 5 if action plot quest completed
+        # then check if action matches trigger reward bonus
         self.completed.append(quest)
         return
 
@@ -149,10 +153,15 @@ class Player:
         return 0
 
     def playAgent(self):
+        # check if they have either plot quests RECOVER THE MAGISTER"S ORB
         return
     
     def playAmbassador(self, buildings):
         return buildings[random.randint(0,len(buildings)-1)]
+    
+    def chooseIntrigue(self):
+        # choose and return an intrigue card
+        return
 
 class Group():
     #AI models will be tied to a player color,
