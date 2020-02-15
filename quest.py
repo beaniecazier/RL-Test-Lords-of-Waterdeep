@@ -45,6 +45,7 @@ class Quest:
         self.plotquest = plot
         self.cost = cost
         self.reward = reward
+        self.effect = {}
 
         if verbose:
             print('Name: '+ str(self.name) + ' is a ' + str(type(self.name)))
@@ -53,7 +54,13 @@ class Quest:
         return
 
     def __repr__(self):
-        return self.name + " is a " + self.questtype + ' quest that costs ' + str(self.cost) + ' and rewards ' + str(self.reward) +'\n'
+        return self.name + " is a " + self.questtype + ' quest that costs:\n' + str(self.cost) + ' and rewards:\n' + str(self.reward) +'\n'
+
+    def __str__(self):
+        return self.name + " is a " + self.questtype + ' quest that costs:\n' + str(self.cost) + ' and rewards:\n' + str(self.reward) +'\n'
+    
+    def addEffect(self, effect, params):
+        self.effect[effect] = params
 
 class Deck():
 
@@ -90,7 +97,10 @@ class Deck():
                 print('ERROR line 91 mandatory quest not found in quest list')
 
     def __repr__(self):
-        return super().__repr__()
+        return 'The QUESTS deck has {} QUESTS left, with {} MANDATORY QUESTS left to be assigned'.format(len(self.quests), len(self.mandatory))
+
+    def __str__(self):
+        return 'The QUESTS deck has {} QUESTS left, with {} MANDATORY QUESTS left to be assigned'.format(len(self.quests), len(self.mandatory))
 
     def draw(self):
         return self.quests.pop()
@@ -119,3 +129,6 @@ class Deck():
     def shuffle(self,num=1):
         for i in range(num):
             random.shuffle(self.quests)
+
+    def debug(self, verbose):
+        print(''.join([str(q) for q in self.quests]))

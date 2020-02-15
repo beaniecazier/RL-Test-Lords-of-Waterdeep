@@ -8,7 +8,7 @@ import copy
 def assignMandatory(player, group, deck, card):
     #get opponent choice
     opponent = group.players[0]
-    quest = deck.mandatory.pop(quests.mandatory.index(quests.find(card.name)))
+    quest = deck.mandatory.pop(deck.mandatory.index(deck.find(card.name)))
     opponent.gainQuest([quest])
 
 def allOpponent(player, group, deck, card):
@@ -57,7 +57,7 @@ def biddingWar(player, group, deck, card):
             quests.append(deck.draw())
     #group.goToCurrent()
     for i in range(group.numplayers):
-        group.getCurrent().chooseQuest(quests)
+        group.getCurrent().chooseFromPile(quests)
         group.nextPlayer()
 
 def specialAssignment(player, group, deck, card):
@@ -112,6 +112,7 @@ class Intrigue:
         self.effects.extend(effects)
     
     def doEffect(self, player, players, deck):
+        # check if has plot quest PLACE A SLEEPER AGENT IN SKULLPORT completed
         for e in self.effects:
             e(player, players, deck, self)
 
@@ -167,21 +168,22 @@ class Deck:
                 c.addEffects([chooseOneOpponent])
             if c.name in ['Recruit Spies','Request Assistance','Research Agreement','Summon the Faithful','Tax Collection']:
                 c.addEffects([allOpponentChoose])
+    
+    def __str__(self):
+        return 'The INTRIGUE deck has {} cards left'.format(len(self.cards))
+        
+    def __repr__(self):
+        return 'The INTRIGUE deck has {} cards left'.format(len(self.cards))
 
-deck = Deck()
-quests = quest.Deck()
-quests.shuffle()
-group = player.Group(3, 3,['yellow','red','blue'])
-playerA = group.players[0]
-playerB = group.players[1]
-playerC = group.players[2]
-#playerB.receiveResources([RVector(0,0,0,0,0,0,0,0,0)])
-playerA.gainIntrigue([deck.cards[9]])
-print(*(playerA.intrigues))
-playerA.intrigues[0].doEffect(playerA,group,quests)
-print('Player A:')
-print(playerA.resources)
-print('Player B:')
-print(playerB.resources)
-print('Player C:')
-print(playerC.resources)
+    def shuffle(self, times=1):
+        for i in range(times):
+            random.shuffle(self.cards)
+    
+    def draw(self):
+        return self.cards.pop()
+
+    def debug(self, verbose=False):
+        if verbose:
+            print('\n'.join([str(c) for c in self.cards]))
+        else:
+            print('\n'.join([c.name for c in self.cards]))

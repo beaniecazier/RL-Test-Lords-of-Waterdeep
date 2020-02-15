@@ -44,15 +44,16 @@
 import pandas as pd
 from resourcevector import RVector
 import random
+import player
 
 class Building:    
     def __init__(self, name, cost, effect, owner, coinpayment, tokenpayment):
         self.cost = cost
         self.name = name
-        self.owner = owner
+        self.owner = None
         self.effectvector = []
         self.resourcepool = RVector(0, 0, 0, 0, 0, 0, 0, 0, 0)
-        self.ownervector = RVector(0, 0, 0, 0, 0, 0, 0, 0, 0)
+        self.ownervector = owner
         self.cumulative = False
         self.occupant = None
         self.showing = False
@@ -73,6 +74,8 @@ class Building:
 
         if name == 'House of Good Spirits':
             self.effectvector.append(RVector(0, 0, 0, 1, 0, 0, 0, 0, 0))
+        if name == 'Northgate':
+            self.effectvector.append(RVector(2, 0, 0, 0, 0, 0, 0, 0, 0))
 
         if name in ['The Golden Horn', 'Spires of the Morning', 'Jester\'s Court', 'Caravan Court', 'Tower of the Order', 'The Waymoot']:
             self.cumulative = True
@@ -80,8 +83,32 @@ class Building:
         return
 
     def __repr__(self):
-        effect = str(self.effectvector[0]) + (' and ' + str(self.effectvector[1])) if len(self.effectvector) > 1 else ""
-        return self.name + ': has the use effect of ' + effect + ' and for the owner ' + str(self.ownervector) + '\n'
+        name = 'Name: ' + self.name + '\n'
+        if self.owner != None:
+            owner = 'The {} player owns this building\n'.format(self.owner.name)
+        else:
+            owner = 'This building is currently not owned'
+            owner += ', and is sitting in the BUILDER"S HALL\n' if self.showing else ', and is still in the deck\n'
+        if self.cumulative:
+            effect = 'Effect: Collect this pile,\n' + str(self.resourcepool) + '\n'
+        else:
+            effect = 'Effect:\n' + '\n'.join([str(e) for e in self.effectvector]) + '\n'
+        ownereffect = 'Owner Effect:\n' + str(self.ownervector) + '\n'
+        return name + owner + effect + ownereffect
+    
+    def __str__(self):
+        name = 'Name: ' + self.name + '\n'
+        if self.owner != None:
+            owner = 'The {} player owns this building\n'.format(self.owner.name)
+        else:
+            owner = 'This building is currently not owned'
+            owner += ', and is sitting in the BUILDER"S HALL\n' if self.showing else ', and is still in the deck\n'
+        if self.cumulative:
+            effect = 'Effect: Collect this pile,\n' + str(self.resourcepool) + '\n'
+        else:
+            effect = 'Effect:\n' + '\n'.join([str(e) for e in self.effectvector]) + '\n'
+        ownereffect = 'Owner Effect:\n' + str(self.ownervector) + '\n'
+        return name + owner + effect + ownereffect
 
     def buy(self, player):
         self.owner = player
@@ -94,23 +121,23 @@ class Building:
 
         if len(self.extraeffects) > 0:
             for effect in self.extraeffects.items():
-                print(effect[0](effect[1], player))
-                
-        player.receiveresources([self.resourcepool] if self.cumulative else self.effectvector)
-
-        # reset cumulative to show player has taken all resources from pile
-        if self.cumulative:
-            self.resourcepool = RVector(0, 0, 0, 0, 0, 0, 0, 0, 0)
+                effect[0](effect[1], player)
 
         # do owner effect
-        if self.owner != player:
-            owner.receiveresources([self.ownervector])
+        if self.owner != player and self.owner != None:
+            self.owner.receiveResources([self.ownervector])
+        else:
+            player.receiveResources([self.resourcepool] if self.cumulative else self.effectvector)
+            # reset cumulative to show player has taken all resources from pile
+            if self.cumulative:
+                self.resourcepool = RVector(0, 0, 0, 0, 0, 0, 0, 0, 0)
+
         return
 
     def updatePile(self):
         if self.cumulative:
             for ev in self.effectvector:
-                self.resourcepool += ev
+                self.resourcepool = self.resourcepool + ev
         return
     
     def reveal(self):
@@ -163,6 +190,12 @@ class Deck():
                                         effect_df.loc[name,'payany'])
         return
 
+    def __str__(self):
+        return 'The BUILDING deck has {} BUILDINGS left in it'.format(len(self.cards))
+
+    def __repr__(self):
+        return 'The BUILDING deck has {} BUILDINGS left in it'.format(len(self.cards))
+
     def draw(self):
         return self.buildings[self.cards.pop()].reveal()
 
@@ -179,3 +212,9 @@ class Deck():
 
     def grabInitialBuildings(self, names):
         return [self.buildings[self.remove(name)] for name in names]
+    
+    def debug(self, verbose = False):
+        if verbose:
+            print('\n'.join([str(self.buildings[b]) for b in self.buildings]))
+        else:
+            print('\n'.join(c for c in self.cards))

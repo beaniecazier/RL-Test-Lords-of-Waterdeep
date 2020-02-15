@@ -13,18 +13,18 @@ class Lord:
     def __init__(self, types, name):
         self.name = name
         self.types = types
-        if self.types == ['Building']:
+        if 'Building' in self.types:
             self.points = 6
         else:
             self.points = 4
 
     def __repr__(self):
         questtypes = ''
-        if self.types == ['Building']:
+        if 'Building' in self.types:
             questtypes = 'Buildings'
         else:
             questtypes = str(self.types[0]) + ' and ' + str(self.types[1])
-        return 'this lord has: ' + questtypes + ' for ' + str(self.points) + ' points each\n'
+        return self.name + ' has: ' + questtypes + ' for ' + str(self.points) + ' points each'
     
     def award(self, quests):        
         return sum(q.questtype in self.types for q in quests) * self.points
@@ -38,11 +38,23 @@ class Deck():
         for name in lord_df.index:
             types = [lord_df.loc[name,'type1'],lord_df.loc[name,'type2']]
             self.lords[name] = Lord(types,name)
-            cards.append(name)
+            self.cards.append(name)
+    
+    def __repr__(self):
+        return 'ERROR cannot peek at the remaining LORD cards'
 
-    def shuffle(self, times):
+    def __str__(self):
+        return 'ERROR cannot peek at the remaining LORD cards'
+
+    def shuffle(self, times = 1):
         for i in range(times):
             random.shuffle(self.cards)
 
     def draw(self):
         return self.cards.pop()
+
+    def debug(self, verbose=False):
+        if verbose:
+            print('\n'.join(str(self.lords[l]) for l in self.lords))
+        else:
+            print('\n'.join(self.cards))
