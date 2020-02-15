@@ -35,6 +35,15 @@ hall = []           # buildings in the builders hall
 group = None        # players
 GM = player.Player('black',0)
 
+#def sendAid(quest, player, group, deck):
+#def establishSafeHouse(quest, player, group, deck):
+#def prisonBreak(quest, player, group, deck):
+#def lootCyrpt(quest, player, group, deck):
+#def researchChronomancy(quest, player, group, deck):
+#def lureArtisans(quest, player, group, deck):
+#def placateWalkingStatue(quest, player, group, deck):
+#def recruitLieutenant(quest, player, group, deck):
+
 def roll():
     return random.randint(0,5)
 
@@ -50,6 +59,8 @@ def heroesGarden(deck, player):
     print('ERROR, Heroes\' Garden is an uncompleted building. main.py Line 53')
 
 def buildersHall():
+    # choose and buy a building from the builder's hall
+    # check if player has the plot quest INFILTRATE BUILDER"S HALL completed
     return
             
 def initializeGame(numplayers, numai):
@@ -155,6 +166,9 @@ def playPhase():
     global inn
     global hall
     group.goToFirst()
+    #cycle through once all player
+    #check if anyone has the plot quest DEFEND THE TOWER OF LUCK as a completed quest
+    #if so then use
     print('Now starting PLay phase for round {}'.format(round))
     while agentsLeft():
         p = group.getCurrent()
