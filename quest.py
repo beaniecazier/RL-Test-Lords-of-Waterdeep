@@ -38,13 +38,13 @@ typeslist = ['Commerce', 'Skullduggery', 'Warfare', 'Piety', 'Arcana', 'Mandator
 class Quest:
     #def __init__(self, *args, **kwargs):
         #super().__init__(*args, **kwargs)
-    def __init__(self, questname, questtype, plot, cost, reward, verbose=False):
+    def __init__(self, questname, params, verbose=False):
         self.name = questname
-        self.questtype = questtype
-        self.mandatory = questtype == 'Mandatory'
-        self.plotquest = plot
-        self.cost = cost
-        self.reward = reward
+        self.questtype = params['questtype']
+        self.mandatory = self.questtype == 'Mandatory'
+        self.plotquest = params['plot']
+        self.cost = RVector(params['cc'],params['wc'],params['bc'],params['onc'],params['pc'],0,0,0,0)
+        self.reward = RVector(params['cr'],params['wr'],params['br'],params['onr'],params['pr'],params['vp'],params['intrigue'],params['quest'],params['choice'])
         self.effect = {}
 
         if verbose:
@@ -61,74 +61,3 @@ class Quest:
     
     def addEffect(self, effect, params):
         self.effect[effect] = params
-
-class Deck():
-
-    drawcallback = []
-    shufflecallback = []
-
-    def __init__(self):
-        qdf = pd.read_csv('quest_cards.csv')
-        names = qdf['name'].tolist()
-        questtypes = qdf['questtype'].tolist()
-        plots = qdf['plot'].tolist()
-        ccs = qdf['cc'].tolist()
-        wcs = qdf['wc'].tolist()
-        bcs = qdf['bc'].tolist()
-        oncs = qdf['onc'].tolist()
-        pcs = qdf['pc'].tolist()
-        crs = qdf['cr'].tolist()
-        wrs = qdf['wr'].tolist()
-        brs = qdf['br'].tolist()
-        onrs = qdf['onr'].tolist()
-        prs = qdf['pr'].tolist()
-        vps = qdf['vp'].tolist()
-        intrigues = qdf['intrigue'].tolist()
-        qs = qdf['quest'].tolist()
-        choices = qdf['choice'].tolist()
-        costs = [RVector(ccs[i], wcs[i], bcs[i], oncs[i], pcs[i], 0, 0, 0, 0) for i in range(len(names))]
-        rewards = [RVector(crs[i], wrs[i], brs[i], onrs[i], prs[i], vps[i], intrigues[i], qs[i], choices[i]) for i in range(len(names))]
-        self.quests = [Quest(names[i], questtypes[i], plots[i], costs[i], rewards[i]) for i in range(len(names))]
-        self.mandatory = [q for q in self.quests if q.questtype == 'Mandatory']
-        for q in self.mandatory:
-            if q in self.quests:
-                self.quests.remove(q)
-            else:
-                print('ERROR line 91 mandatory quest not found in quest list')
-
-    def __repr__(self):
-        return 'The QUESTS deck has {} QUESTS left, with {} MANDATORY QUESTS left to be assigned'.format(len(self.quests), len(self.mandatory))
-
-    def __str__(self):
-        return 'The QUESTS deck has {} QUESTS left, with {} MANDATORY QUESTS left to be assigned'.format(len(self.quests), len(self.mandatory))
-
-    def draw(self):
-        return self.quests.pop()
-
-    def subscribedrawevent(self):
-        return
-
-    def subscribeshuffleevent(self):
-        return
-
-    def firecallbacks(self, callbacklist):
-        for c in callbacklist:
-            c()
-        return
-
-    def find(self, name):
-        for q in self.mandatory: 
-            if q.name == name:
-                return q
-        for q in self.quests: 
-            if q.name == name:
-                return q
-        print('ERROR quest not found in deck')
-        return None
-
-    def shuffle(self,num=1):
-        for i in range(num):
-            random.shuffle(self.quests)
-
-    def debug(self, verbose):
-        print(''.join([str(q) for q in self.quests]))
