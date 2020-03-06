@@ -1,9 +1,11 @@
 import random
 import sys
+import copy
 
 import pandas as pd
 from itertools import cycle
 
+from deck import Deck
 import building
 import player
 import quest
@@ -25,24 +27,49 @@ startingIntrigue = 2
 innSize = 4
 hallSize = 3
 vproundamount = RVector(0,0,0,0,0,1,0,0,0)
-lords = None        # pile of lord cards
-quests = None       # quest deck
-intrigues = None    # intrigue deck
-buildings = []      # building deck
-board = None        # buildings in play
+
+lords = Deck(pd.read_csv('lords.csv', index_col ='name'), 'lord', 'lord')
+quests = Deck(pd.read_csv('quests.csv', index_col ='name'), 'quest', 'quest')
+intrigues = Deck(pd.read_csv('intrigue.csv', index_col ='name'), 'intrigue', 'intrigue')
+buildings = Deck(pd.read_csv('buildings.csv', index_col ='name'), 'building', 'building')
+board = [buildings[buildings.remove(name)] for name in startingbuildings]
 inn = []            # quests available in the inn
 hall = []           # buildings in the builders hall
 group = None        # players
-GM = player.Player('black',0)
+GM = player.Player('gamemaster',0)
 
-#def sendAid(quest, player, group, deck):
-#def establishSafeHouse(quest, player, group, deck):
-#def prisonBreak(quest, player, group, deck):
-#def lootCyrpt(quest, player, group, deck):
-#def researchChronomancy(quest, player, group, deck):
-#def lureArtisans(quest, player, group, deck):
-#def placateWalkingStatue(quest, player, group, deck):
-#def recruitLieutenant(quest, player, group, deck):
+def setUpIntrigues():
+    for c in intrigues.cards:
+        if intrigues[c].name in ['Fend Off Bandits','Foil the Zhentarim','Placate Angry Merchants','Quell Riots','Repel Drow Invaders','Stamp Out Cultists']:
+            intrigues[c].addEffects([assignMandatory])
+        if intrigues[c].name == 'Call for Adventurers':
+            intrigues[c].addEffects([callForAdventurers])
+        if intrigues[c].name == 'Bribe Agent':
+            intrigues[c].addEffects([])
+        if intrigues[c].name == 'Free Drinks':
+            intrigues[c].addEffects([freeDrinks])
+        if intrigues[c].name == 'Accelerate Plans':
+            intrigues[c].addEffects([])
+        if intrigues[c].name == 'Bidding War':
+            intrigues[c].addEffects([biddingWar])
+        if intrigues[c].name == 'Call in a Favor':
+            intrigues[c].addEffects([callInAFavor])
+        if intrigues[c].name == 'Change of Plans':
+            intrigues[c].addEffects([])
+        if intrigues[c].name == 'Real Estate Deal':
+            intrigues[c].addEffects([])
+        if intrigues[c].name == 'Recall Agent':
+            intrigues[c].addEffects([])
+        if intrigues[c].name == 'Sample Wares':
+            intrigues[c].addEffects([])
+        if intrigues[c].name == 'Special Assignment':
+            intrigues[c].addEffects([specialAssignment])
+        if intrigues[c].name in ['Ambush','Arcane Mishap','Assassination','Lack of Faith']:
+            intrigues[c].addEffects([allOpponent])
+        if intrigues[c].name in ['Conscription','Crime Wave','Good Faith','Graduation Day','Spread the Wealth']:
+            intrigues[c].addEffects([chooseOneOpponent])
+        if intrigues[c].name in ['Recruit Spies','Request Assistance','Research Agreement','Summon the Faithful','Tax Collection']:
+            intrigues[c].addEffects([allOpponentChoose])
 
 def roll():
     return random.randint(0,5)
@@ -51,18 +78,21 @@ def checkArgs():
     #whether tokens and resources should be limited or unlimited
     return
 
-def palaceOfWaterDeep(group, player):
-    for p in group.players:
-        p.setAmbassador(p == player)
+def buildCallBacks():
+    buildings['The Stone House'].extraeffects[lambda board, player: player.receiveResources(RVector(len(board) - 13,0,0,0,0,0,0,0,0))] = [board]
+    buildings['The Waymoot'].extraeffects[lambda skip, player: player.receiveResources(RVector(0,0,0,0,0,0,0,1,0))] = [None]
+    buildings['The Zoarstar'].extraeffects[lambda board, player:player.chooseBuilding(
+        [b for b in board if b.occupant != player])] = [board]
+    buildings['The Palace of Waterdeep'].extraeffects[palaceOfWaterDeep] = [group]
+    buildings['Heroes\' Garden'].extraeffects[heroesGarden] = [inn]
 
-def heroesGarden(deck, player):
-    print('ERROR, Heroes\' Garden is an uncompleted building. main.py Line 53')
-
-def buildersHall():
-    # choose and buy a building from the builder's hall
-    # check if player has the plot quest INFILTRATE BUILDER"S HALL completed
+def pickFirstPlayer():
+    #determine first player
+        #pick someone
+        #cycle list to that person
+        #has to come before money handout
     return
-            
+
 def initializeGame(numplayers, numai):
     global lords
     global quests
@@ -73,47 +103,26 @@ def initializeGame(numplayers, numai):
     global inn
     global hall
 
-    lords = lord.Deck()
-    quests = quest.Deck()
-    intrigues = intrigue.Deck()
-    buildings = building.Deck()
-    board = buildings.grabInitialBuildings(startingbuildings)
-    #shuffle decks
-    lords.shuffle()
-    quests.shuffle()
-    intrigues.shuffle()
-    buildings.shuffle()
-    #make players
-    group = player.Group(numplayers, numai, lords, ['yellow', 'red'])
-    #determine first player
-        #pick someone
-        #cycle list to that person
-        #has to come before money handout
-    #deal quests
-    for p in group.players:
-        p.gainQuest([quests.draw() for i in range(startingQuests)])
-    #deal intrigue
-    for p in group.players:
-        p.gainIntrigue([intrigues.draw() for i in range(startingIntrigue)])
-    #hand out initial currency
+    lords.reshuffle()
+    quests.reshuffle()
+    intrigues.reshuffle()
+    buildings.reshuffle()
+    board.clear()
+    board = [buildings[buildings.remove(name)] for name in startingbuildings]
+    group = player.Group(numplayers, numai, lords)
+    pickFirstPlayer()
     startingGold = RVector(4,0,0,0,0,0,0,0,0)
     group.goToFirst()
     for i in range(numplayers):
         group.getCurrent().receiveResources([startingGold])
+        group.getCurrent().gainQuest([quests.draw() for i in range(startingQuests)])
+        group.getCurrent().gainIntrigue([intrigues.draw() for i in range(startingIntrigue)])
         startingGold.coin += 1
         group.nextPlayer()
-    #add quests to the inn
     inn = [quests.draw() for i in range(innSize)]
-    #builders hall
     hall = {buildings.draw():RVector(0,0,0,0,0,0,0,0,0) for i in range(hallSize)}
-    #finally add callbacks
-    buildings.buildings['The Stone House'].extraeffects[lambda board, player: player.receiveResources(RVector(len(board) - 13,0,0,0,0,0,0,0,0))] = [board]
-    buildings.buildings['The Waymoot'].extraeffects[lambda skip, player: player.receiveResources(RVector(0,0,0,0,0,0,0,1,0))] = [None]
-    buildings.buildings['The Zoarstar'].extraeffects[lambda board, player:player.chooseBuilding(
-        [b for b in board if b.occupant != player])] = [board]
-    buildings.buildings['The Palace of Waterdeep'].extraeffects[palaceOfWaterDeep] = [group]
-    buildings.buildings['Heroes\' Garden'].extraeffects[heroesGarden] = [inn]
-    return
+    buildCallBacks()
+    return 0
 
 def agentsLeft():
     global group
@@ -217,17 +226,17 @@ def main(numplayers, numai):
     endGame()
     return
 
-initializeGame(2, 2)
-board[0].use(group.players[0])
-print(group)
-print('Buildings on the board:')
-print(board)
-print('These buildings are available in the BUILDER\'S HALL')
-print('\n'.join(str(b) for b in hall))
-resetPhase()
-print('Buildings on the board after reset:')
-print(board)
-updatePhase(5)
+# initializeGame(2, 2)
+# board[0].use(group.players[0])
+# print(group)
+# print('Buildings on the board:')
+# print(board)
+# print('These buildings are available in the BUILDER\'S HALL')
+# print('\n'.join(str(b) for b in hall))
+# resetPhase()
+# print('Buildings on the board after reset:')
+# print(board)
+# updatePhase(5)
 
 if '__name__' == '__main__':
     checkArgs()

@@ -36,8 +36,6 @@ import random
 typeslist = ['Commerce', 'Skullduggery', 'Warfare', 'Piety', 'Arcana', 'Mandatory']
 
 class Quest:
-    #def __init__(self, *args, **kwargs):
-        #super().__init__(*args, **kwargs)
     def __init__(self, questname, params, verbose=False):
         self.name = questname
         self.questtype = params['questtype']

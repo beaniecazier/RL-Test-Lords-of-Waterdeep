@@ -47,40 +47,30 @@ import random
 import player
 
 class Building:    
-    def __init__(self, name, cost, effect, owner, coinpayment, tokenpayment):
-        self.cost = cost
+    def __init__(self, name, data):
         self.name = name
         self.owner = None
-        self.effectvector = []
-        self.resourcepool = RVector(0, 0, 0, 0, 0, 0, 0, 0, 0)
-        self.ownervector = owner
-        self.cumulative = False
         self.occupant = None
         self.showing = False
+        self.cumulative = data['cumulative']
+        self.rvectors = []
         # this is a dictionary whose key is a lambda and value is a list of parameters needed
         self.extraeffects = {}
-        self.coincost = False
-        self.tokencost = False
 
-        if tokenpayment > 0:
-            self.effectvector.append(RVector(0,-1,-1,-1,-1,0,0,0,tokenpayment))
-            self.tokencost = True
+        self.costvector = [RVector(data['cost'],0,0,0,0,0,0,0,0)]
+        self.ownervector = [RVector(data['owncoin'],data['ownwhite'],data['ownblack'],data['ownorange'],data['ownpurple'],data['ownvp'],data['ownintrigue'],0,data['ownchoice'])]
 
-        if coinpayment > 0:
-            self.effectvector.append(RVector(-coinpayment,0,0,0,0,0,0,0,0))
-            self.coincost = True
+        self.coincost = data['paycoin'] > 0
+        self.tokencost = data['payany'] > 0
+        self.payvector = [RVector(0,-1,-1,-1,-1,0,0,0,data['payany']) if self.tokencost else RVector(data['paycoin'],0,0,0,0,0,0,0,0)]
 
-        self.effectvector.append(effect)
-
+        self.usevectors = [RVector(data['coin'],data['white'],data['black'],data['orange'],data['purple'],data['vp'],data['intrigue'],data['quest'],data['choice'])]
         if name == 'House of Good Spirits':
-            self.effectvector.append(RVector(0, 0, 0, 1, 0, 0, 0, 0, 0))
+            self.usevectors.append(RVector(0, 0, 0, 1, 0, 0, 0, 0, 0))
         if name == 'Northgate':
-            self.effectvector.append(RVector(2, 0, 0, 0, 0, 0, 0, 0, 0))
-
-        if name in ['The Golden Horn', 'Spires of the Morning', 'Jester\'s Court', 'Caravan Court', 'Tower of the Order', 'The Waymoot']:
-            self.cumulative = True
-            self.resourcepool = effect
-        return
+            self.usevectors.append(RVector(2, 0, 0, 0, 0, 0, 0, 0, 0))
+        
+        self.rvectors.extend(self.usevectors)
 
     def __repr__(self):
         name = 'Name: ' + self.name + '\n'
@@ -90,9 +80,9 @@ class Building:
             owner = 'This building is currently not owned'
             owner += ', and is sitting in the BUILDER"S HALL\n' if self.showing else ', and is still in the deck\n'
         if self.cumulative:
-            effect = 'Effect: Collect this pile,\n' + str(self.resourcepool) + '\n'
+            effect = 'Effect: Collect this pile,\n' + str(self.rvectors) + '\n'
         else:
-            effect = 'Effect:\n' + '\n'.join([str(e) for e in self.effectvector]) + '\n'
+            effect = 'Effect:\n' + '\n'.join([str(e) for e in self.usevectors]) + '\n'
         ownereffect = 'Owner Effect:\n' + str(self.ownervector) + '\n'
         return name + owner + effect + ownereffect
     
@@ -104,40 +94,49 @@ class Building:
             owner = 'This building is currently not owned'
             owner += ', and is sitting in the BUILDER"S HALL\n' if self.showing else ', and is still in the deck\n'
         if self.cumulative:
-            effect = 'Effect: Collect this pile,\n' + str(self.resourcepool) + '\n'
+            effect = 'Effect: Collect this pile,\n' + str(self.rvectors) + '\n'
         else:
-            effect = 'Effect:\n' + '\n'.join([str(e) for e in self.effectvector]) + '\n'
+            effect = 'Effect:\n' + '\n'.join([str(e) for e in self.usevectors]) + '\n'
         ownereffect = 'Owner Effect:\n' + str(self.ownervector) + '\n'
         return name + owner + effect + ownereffect
 
     def buy(self, player):
+        #set owner
+        #move from builder's hall to board
+        #if it is cumulative get the first set of resources
         self.owner = player
         if  self.cumulative:
-            player.receiveresources([self.resourcepool])
-            self.resourcepool = RVector(0,0,0,0,0,0,0,0,0)
+            player.receiveresources(self.rvectors)
+            self.rvectors.clear()
 
     def use(self, player): 
+        # first check to see if player can meet pay vector
+        if player.resources < self.payvector:
+            print('ERROR {} player cannot pay the requirements to go to this building'.format(player.color))
+            return -1
+
+        player.receiveResources(self.payvector)
         self.occupant = player
 
         if len(self.extraeffects) > 0:
             for effect in self.extraeffects.items():
                 effect[0](effect[1], player)
 
+        player.receiveResources(self.rvectors)
+
         # do owner effect
         if self.owner != player and self.owner != None:
-            self.owner.receiveResources([self.ownervector])
-        else:
-            player.receiveResources([self.resourcepool] if self.cumulative else self.effectvector)
-            # reset cumulative to show player has taken all resources from pile
-            if self.cumulative:
-                self.resourcepool = RVector(0, 0, 0, 0, 0, 0, 0, 0, 0)
+            self.owner.receiveResources(self.ownervector)
+        
+        # reset cumulative to show player has taken all resources from pile
+        if self.cumulative:
+            self.rvectors.clear()
 
         return
 
     def updatePile(self):
         if self.cumulative:
-            for ev in self.effectvector:
-                self.resourcepool = self.resourcepool + ev
+            self.rvectors.extend(self.usevectors)
         return
     
     def reveal(self):
@@ -146,75 +145,3 @@ class Building:
 
     def clear(self):
         self.occupant = None
-
-class Deck():
-    def __init__(self):
-        effect_df = pd.read_csv('buildingeffect.csv')
-        cost_df = pd.read_csv('buildingcost.csv')
-        owner_df = pd.read_csv('buildingowner.csv')
-
-        # set index for each
-        effect_df.set_index('name', inplace=True)
-        cost_df.set_index('name', inplace=True)
-        owner_df.set_index('name', inplace=True)
-        # check to make sure indexes are same
-        # mesh together
-        # make list of indexes
-        self.cards = []
-        self.buildings = {}
-        for name in cost_df.index:
-            effect = RVector(effect_df.loc[name, 'coin'],
-                             effect_df.loc[name, 'white'],
-                             effect_df.loc[name, 'black'],
-                             effect_df.loc[name, 'orange'],
-                             effect_df.loc[name, 'purple'],
-                             effect_df.loc[name, 'vp'],
-                             effect_df.loc[name, 'intrigue'],
-                             effect_df.loc[name, 'quest'],
-                             effect_df.loc[name, 'choice'])
-            owner = RVector(owner_df.loc[name, 'coin'],
-                             owner_df.loc[name, 'white'],
-                             owner_df.loc[name, 'black'],
-                             owner_df.loc[name, 'orange'],
-                             owner_df.loc[name, 'purple'],
-                             owner_df.loc[name, 'vp'],
-                             owner_df.loc[name, 'intrigue'],
-                             owner_df.loc[name, 'quest'],
-                             owner_df.loc[name, 'choice'])
-            self.cards.append(name)
-            self.buildings[name] = Building(name, 
-                                        cost_df.loc[name,'cost'], 
-                                        effect, 
-                                        owner, 
-                                        effect_df.loc[name,'paycoin'],
-                                        effect_df.loc[name,'payany'])
-        return
-
-    def __str__(self):
-        return 'The BUILDING deck has {} BUILDINGS left in it'.format(len(self.cards))
-
-    def __repr__(self):
-        return 'The BUILDING deck has {} BUILDINGS left in it'.format(len(self.cards))
-
-    def draw(self):
-        return self.buildings[self.cards.pop()].reveal()
-
-    def shuffle(self):
-        random.shuffle(self.cards)
-        return
-    
-    def remove(self, name):
-        if name in self.cards:
-                # this throws value error if could not remove or not found
-            self.cards.remove(name)
-            return self.buildings[name].reveal().name
-        return 'ERROR: Building not found in deck'
-
-    def grabInitialBuildings(self, names):
-        return [self.buildings[self.remove(name)] for name in names]
-    
-    def debug(self, verbose = False):
-        if verbose:
-            print('\n'.join([str(self.buildings[b]) for b in self.buildings]))
-        else:
-            print('\n'.join(c for c in self.cards))

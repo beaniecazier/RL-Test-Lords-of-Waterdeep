@@ -1,0 +1,10 @@
+buy function adds rvector to rvectors
+remove resourcepool and adding to resourcepool for cumulative at init and not at purchase
+use payment values as 2 flags and to build the pay vector
+look into generalizing rvector to any size
+make extra functions file
+do loop to runtime import each function needed by name of object that needs that function
+make alll extra effects functions only take current player as the only parameter
+make a function that before play starts it gets a reference to each needed object from main and saves in extra effects file for functions to use
+players need a history list and a variable that says wheither or not a bad attempt to do something was made
+add function for AI to retreive history after game is over for training
