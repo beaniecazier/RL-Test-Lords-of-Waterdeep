@@ -52,7 +52,6 @@ class Building(Card):
         super.__init__(name)
         self.owner = None
         self.occupant = None
-        self.showing = False
         self.cumulative = data['cumulative']
         self.rvectors = []
         # this is a dictionary whose key is a lambda and value is a list of parameters needed
@@ -139,10 +138,6 @@ class Building(Card):
         if self.cumulative:
             self.rvectors.extend(self.usevectors)
         return
-    
-    def reveal(self):
-        self.showing = True
-        return self
 
     def clear(self):
         self.occupant = None
