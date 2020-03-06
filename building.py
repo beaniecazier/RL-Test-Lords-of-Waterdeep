@@ -45,10 +45,11 @@ import pandas as pd
 from resourcevector import RVector
 import random
 import player
+from card import Card
 
-class Building:    
+class Building(Card):    
     def __init__(self, name, data):
-        self.name = name
+        super.__init__(name)
         self.owner = None
         self.occupant = None
         self.showing = False
