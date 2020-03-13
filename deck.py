@@ -5,7 +5,7 @@ class Deck():
         self.type = kind.upper()
         self.items = {}
         self.cards = df.index
-        module = __import__(kind.to_lower())
+        module = __import__(kind.lower())
         class_ = getattr(module, kind.capitalize())
         self.items = {name : class_(name, df[name].to_dict()) for name in df.index}
         

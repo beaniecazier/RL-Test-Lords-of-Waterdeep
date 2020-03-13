@@ -98,3 +98,5 @@ class RVector():
     
     def __mul__(self,other):
         return RVector(int(other*self.coin),int(other*self.white),int(other*self.black),int(other*self.orange),int(other*self.purple),int(other*self.vp),int(other*self.intrigue),int(other*self.quest),int(other*self.choice))
+
+Zero = RVector(0,0,0,0,0,0,0,0,0)

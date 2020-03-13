@@ -32,20 +32,19 @@
 import pandas as pd
 from resourcevector import RVector
 import random
+from card import Card
 
 typeslist = ['Commerce', 'Skullduggery', 'Warfare', 'Piety', 'Arcana', 'Mandatory']
 
-class Quest:
-    #def __init__(self, *args, **kwargs):
-        #super().__init__(*args, **kwargs)
-    def __init__(self, questname, params, verbose=False):
-        self.name = questname
+class Quest(Card):
+    def __init__(self, name, params, verbose=False):
+        super.__init__(name)
         self.questtype = params['questtype']
         self.mandatory = self.questtype == 'Mandatory'
         self.plotquest = params['plot']
         self.cost = RVector(params['cc'],params['wc'],params['bc'],params['onc'],params['pc'],0,0,0,0)
         self.reward = RVector(params['cr'],params['wr'],params['br'],params['onr'],params['pr'],params['vp'],params['intrigue'],params['quest'],params['choice'])
-        self.effect = {}
+        self.extraeffects = {}
 
         if verbose:
             print('Name: '+ str(self.name) + ' is a ' + str(type(self.name)))
@@ -58,6 +57,3 @@ class Quest:
 
     def __str__(self):
         return self.name + " is a " + self.questtype + ' quest that costs:\n' + str(self.cost) + ' and rewards:\n' + str(self.reward) +'\n'
-    
-    def addEffect(self, effect, params):
-        self.effect[effect] = params

@@ -10,9 +10,9 @@ typeslist = ['Building', 'Commerce', 'Skullduggery', 'Warfare', 'Piety', 'Arcana
 names = []
 
 class Lord: 
-    def __init__(self, types, name):
+    def __init__(self, name, data):
         self.name = name
-        self.types = types
+        self.types = [data['type1'], data['type2']]
         if 'Building' in self.types:
             self.points = 6
         else:
@@ -28,33 +28,3 @@ class Lord:
     
     def award(self, quests):        
         return sum(q.questtype in self.types for q in quests) * self.points
-
-class Deck():
-    def __init__(self):
-        lord_df = pd.read_csv('lords.csv')
-        lord_df.set_index('name', inplace=True)
-        self.lords = {}
-        self.cards = []
-        for name in lord_df.index:
-            types = [lord_df.loc[name,'type1'],lord_df.loc[name,'type2']]
-            self.lords[name] = Lord(types,name)
-            self.cards.append(name)
-    
-    def __repr__(self):
-        return 'ERROR cannot peek at the remaining LORD cards'
-
-    def __str__(self):
-        return 'ERROR cannot peek at the remaining LORD cards'
-
-    def shuffle(self, times = 1):
-        for i in range(times):
-            random.shuffle(self.cards)
-
-    def draw(self):
-        return self.cards.pop()
-
-    def debug(self, verbose=False):
-        if verbose:
-            print('\n'.join(str(self.lords[l]) for l in self.lords))
-        else:
-            print('\n'.join(self.cards))

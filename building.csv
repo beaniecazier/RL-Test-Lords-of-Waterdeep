@@ -1,0 +1,38 @@
+name,cost,coin,white,black,orange,purple,vp,intrigue,quest,choice,paycoin,payany,owncoin,ownwhite,ownblack,ownorange,ownpurple,ownvp,ownintrigue,ownchoice,cumulative
+Cliffwatch Inn1,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,FALSE
+Cliffwatch Inn2,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,FALSE
+Cliffwatch Inn3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,FALSE
+Waterdeep Harber1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,FALSE
+Waterdeep Harber2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,FALSE
+Waterdeep Harber3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,FALSE
+Field of Triumph,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,FALSE
+Blackstaff Tower,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,FALSE
+Castle Waterdeep,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,FALSE
+Builder's Hall,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,FALSE
+Aurora's Realms Shop,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,FALSE
+The Plinth,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,FALSE
+The Grinning Lion Tavern,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,FALSE
+New Olamn,8,0,0,2,0,1,0,0,0,0,0,0,0,0,1,0,1,0,0,1,FALSE
+Fetlock Court,8,0,0,0,2,1,0,0,0,0,0,0,0,0,0,1,1,0,0,1,FALSE
+House of Heroes,8,0,1,0,2,0,0,0,0,0,0,0,0,1,0,1,0,0,0,1,FALSE
+Helmstar Warehouse,3,2,0,2,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,FALSE
+The Skulkway,4,2,0,1,1,0,0,0,0,0,0,0,0,0,1,1,0,0,0,1,FALSE
+The Tower of Luck,8,0,1,2,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,1,FALSE
+Dragon Tower,3,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,1,0,FALSE
+The Golden Horn,4,4,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,TRUE
+Spires of the Morning,4,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,TRUE
+Jester's Court,4,0,0,2,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,TRUE
+Caravan Court,4,0,0,0,2,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,TRUE
+Tower of the Order,4,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,TRUE
+The Waymoot,4,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,2,0,0,TRUE
+Heroes' Garden,4,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,2,0,0,FALSE
+House of the Moon,3,0,1,0,0,0,0,0,1,0,0,0,2,0,0,0,0,0,0,0,FALSE
+House of Good Spirits,3,0,1,1,1,1,0,0,0,1,0,0,0,0,0,1,0,0,0,0,FALSE
+The Yawning Portal,4,0,1,1,1,1,0,0,0,2,0,0,0,1,1,1,1,0,0,1,FALSE
+Northgate,3,0,1,1,1,1,0,0,0,1,0,0,0,0,0,0,0,2,0,0,FALSE
+The Three Pearls,4,0,1,1,1,1,0,0,0,3,0,2,2,0,0,0,0,0,0,0,FALSE
+Smuggler's Dock,4,0,0,1,1,0,0,0,0,4,2,0,2,0,0,0,0,0,0,0,FALSE
+House of Wonder,4,0,1,0,0,1,0,0,0,2,2,0,2,0,0,0,0,0,0,0,FALSE
+The Stone House,4,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,FALSE
+The Zoarstar,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,FALSE
+The Palace of Waterdeep,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,FALSE
